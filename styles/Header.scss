@@ -17,12 +17,14 @@
 }
 
 .header ul {
+    z-index: 100;
     display: inline-block;
     margin: 0;
 }
 
 .header ul li {
     display: inline-block;
+    font-size: 14px;
 }
 
 .header ul.menu > li > a {

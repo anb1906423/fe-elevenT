@@ -1,3 +1,5 @@
+import { FaAngleDown } from 'react-icons/fa'
+
 function removeAccentsAndLowerCase(str) {
     str = str.toLowerCase();
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -26,6 +28,7 @@ export const menu = [
     },
     {
         title: 'Áo nam',
+        icon: <FaAngleDown />,
         href: '/san-pham/ao-nam',
         list: [
             {
@@ -56,6 +59,7 @@ export const menu = [
     },
     {
         title: 'Quần nam',
+        icon: <FaAngleDown />,
         href: '/san-pham/quan-nam',
         list: [
             {
@@ -74,6 +78,7 @@ export const menu = [
     },
     {
         title: 'Quần lót nam',
+        icon: <FaAngleDown />,
         href: '/san-pham/quan-lot-nam',
         list: [
             {

@@ -66,8 +66,11 @@ const Header = () => {
                   className="menu-item fw-bold text-uppercase position-relative"
                   key={index}>
                   <a
-                    href={item.href}>
+                    className="d-flex align-items-center"
+                    href={item.href}
+                  >
                     {item.title}
+                    <div>{item.icon}</div>
                   </a>
                   <ul className='sub-menu position-absolute'>
                     {
