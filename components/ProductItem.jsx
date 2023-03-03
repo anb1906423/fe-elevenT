@@ -9,16 +9,18 @@ const ProductItem = (props) => {
                     <img className='img' src={props.img} alt="" />
                     <div className="position-absolute rate-box">
                         <span className='d-flex justify-content-start align-items-center'>
-                            <span>
+                            <span className='rating d-flex justify-content-start align-items-center'>
                                 {
                                     props.rating
                                 }
                             </span>
-                                <StarFilled />
-                            <span className='feedback_quantity text-primary'>
-                                ({
+                            <StarFilled className='d-flex justify-content-start align-items-center' />
+                            <span className='feedback_quantity text-primary d-flex justify-content-start align-items-center'>
+                                ⟮
+                                {
                                     props.feedback_quantity
-                                })
+                                }
+                                ⟯
                             </span>
                         </span>
                     </div>
