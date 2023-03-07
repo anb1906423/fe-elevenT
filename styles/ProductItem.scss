@@ -15,20 +15,23 @@
 }
 
 .product-item .img-box {
-    height          : 380px;
+    height          : auto;
     background-color: var(--white);
 
     .rate-box {
-        top: 0;
-        color: var(--black);
+        top    : 0;
+        color  : var(--black);
         padding: 1px 5px;
+
         span {
             padding: 1px;
-            height: 30px;
+            height : 30px;
+
             svg {
                 font-size: 10px;
             }
         }
+
         .feedback_quantity {
             padding: 2px;
         }
@@ -88,11 +91,11 @@
 @keyframes showSizeBox {
     from {
         transform: translateY(20px);
-        opacity: 0;
+        opacity  : 0;
     }
 
     to {
         transform: translateY(0);
-        opacity: 1;
+        opacity  : 1;
     }
 }

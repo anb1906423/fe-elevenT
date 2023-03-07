@@ -71,7 +71,7 @@ const Product = () => {
                         return (
                             <ProductItem
                                 key={index}
-                                id={product.product_id}
+                                product_id={product.product_id}
                                 img={product.product_image}
                                 name={product.product_name}
                                 realPrice={product.realPrice}
@@ -79,6 +79,7 @@ const Product = () => {
                                 discount={product.discount}
                                 sizes={product.sizes}
                                 rating={product.rating}
+                                colour_id={product.colour_id}
                                 feedback_quantity={product.feedback_quantity}
                             />
                         )

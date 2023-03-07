@@ -1,10 +1,14 @@
 import React from 'react'
 import { StarFilled } from '@ant-design/icons'
+import { frontendAPI } from '@/config'
 
 const ProductItem = (props) => {
+    // const mergeId = (product_id, colour_id) = {
+    //     return product_id + colour_id
+    // }
     return (
         <div className='product-item'>
-            <a href={props.id}>
+            <a href={`${frontendAPI}/san-pham/${props.product_id}/${props.colour_id}`}>
                 <div className="position-relative img-box">
                     <img className='img' src={props.img} alt="" />
                     <div className="position-absolute rate-box">

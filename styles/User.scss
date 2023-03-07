@@ -1,6 +1,6 @@
 .user {
     height: 100vh;
-    z-index: 100;
+    z-index: 1000;
     background-color: rgba(172, 172, 172, 0.5);
     .user-box {
         background-color: var(--white);
@@ -8,7 +8,7 @@
         max-width: 600px;
         margin: 0 auto;
         padding: 44px;
-        margin-top: 2%;
+        margin-top: 4%;
         .heading {
             padding-bottom: 8px;
         }

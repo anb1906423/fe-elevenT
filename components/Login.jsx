@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { FaTimes } from 'react-icons/fa'
+import axios from 'axios'
+import { backendAPI } from '@/config'
+import { swalert, swtoast } from '@/mixins/swal.mixin'
 
 const Login = (props) => {
   const userRef = useRef()
@@ -9,7 +12,23 @@ const Login = (props) => {
 
   useEffect(() => {
     userRef.current.focus()
-  })
+  }, [])
+
+  const handleLogin = async () => {
+    try {
+      const result = await axios.post(`${backendAPI}/api/customer/login`, {
+        email: username,
+        password: password
+      })
+      swtoast.success({
+        text: "Đăng nhập tài khoản thành công!"
+      })
+    } catch (error) {
+      swtoast.error({
+        text: error.response.data
+      })
+    }
+  }
 
   return (
     <div className='user login w-100 position-absolute' onClick={props.toClose}>
@@ -17,7 +36,7 @@ const Login = (props) => {
         <div className="header-form position-absolute" onClick={props.toClose}>
           <FaTimes />
         </div>
-        <form action="" className="form-user form-login">
+        <form action="" onSubmit={handleLogin} className="form-user form-login">
           <h3 className="heading">Đăng nhập</h3>
           <input
             type="text"
@@ -25,7 +44,7 @@ const Login = (props) => {
             placeholder='Email / Số điện thoại'
             ref={userRef}
             value={username}
-            onChange={(e) => setUserName(e.target.value)}
+            onChange={(e) => setUsername(e.target.value)}
           />
           <input
             type="password"

@@ -1,0 +1,101 @@
+.product-detail-page {
+    margin-top: 24px;
+
+    .main-infor-product {
+        margin: 12px;
+
+        .product-name {
+            font-size  : 25px;
+            font-weight: bold;
+        }
+
+        .rating {
+            >span {
+                margin: 0px 8px;
+            }
+
+            h6 {
+                margin: 0px 6px;
+            }
+        }
+
+        .colour-option-box {
+            margin: 8px 0;
+        }
+
+        .size-option-box {
+            margin: 8px 0;
+        }
+
+        .action-box {
+            margin-bottom: 12px;
+            .add-product-to-cart-button {
+                cursor          : pointer;
+                background-color: #000;
+                color           : #fff;
+                transition      : all .2s ease-in-out;
+
+                &:hover {
+                    background-color: #ccc;
+                    color           : #000;
+                }
+            }
+
+            div {
+                border       : 1px solid #000;
+                padding      : 6px 4px;
+                border-radius: 12px;
+                margin       : 8px 12px;
+
+                svg {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .policy-box {
+            &::after {
+                content         : "";
+                position        : absolute;
+                background-color: #ccc;
+                width           : 100%;
+                height          : 1px;
+                top             : 0;
+                left            : 0;
+            }
+        }
+    }
+
+    .review-box {
+        padding: 24px 0;
+        margin : 20px 0;
+
+        .feedback_quantify-detail {
+            margin: 0 24px 0 0;
+        }
+
+        .rating-detail {
+            color : #000000;
+            margin: 0 0 0 24px;
+
+        }
+
+        &::after {
+            content         : '';
+            position        : absolute;
+            width           : 100%;
+            height          : 1px;
+            background-color: #ccc;
+            top             : 0;
+        }
+
+        &::before {
+            content         : '';
+            position        : absolute;
+            width           : 100%;
+            height          : 1px;
+            background-color: #ccc;
+            bottom          : 0;
+        }
+    }
+}
