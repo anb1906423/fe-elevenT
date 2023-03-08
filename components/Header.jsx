@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Swal from "sweetalert2";
 import Login from "./Login"
 import Register from './Register';
-import { FaUserAlt, FaShoppingCart } from 'react-icons/fa'
+import { FaUserAlt, FaShoppingCart, FaShoppingBag } from 'react-icons/fa'
 import { menu } from 'data/data'
 
 const Header = () => {
@@ -24,7 +24,7 @@ const Header = () => {
       href: '#',
     },
     {
-      title: <FaShoppingCart />,
+      title: <FaShoppingBag />,
       function: () => {
         console.log("Cart Page");
       },

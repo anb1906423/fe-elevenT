@@ -137,6 +137,9 @@ const ProductDetail = () => {
             </span>
             <span>Đã bán (web): {sold}</span>
           </div>
+          <div className="price-box">
+            <strong>{price}đ</strong>
+          </div>
           <div className="colour-option-box">
             <span>Màu: 
               <strong>
@@ -180,7 +183,7 @@ const ProductDetail = () => {
           <div className="action-box row">
             <div className="fw-bold quantity-button col-3 d-flex justify-content-around align-items-center">
               <PlusOutlined />
-              <span>1</span>
+              <span>{countProduct != undefined ? countProduct : 0}</span>
               <MinusOutlined />
             </div>
             <div className="add-product-to-cart-button col-7 d-flex justify-content-around align-items-center">

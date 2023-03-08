@@ -3,7 +3,7 @@ const { CounterProductReducer } = require("./reducers/CounterProductReducer");
 
 const store = configureStore({
     reducer: {
-        counterProduct: CounterProductReducer
+        "counterProduct": CounterProductReducer
     }
 })
 

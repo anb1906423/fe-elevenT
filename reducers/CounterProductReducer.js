@@ -1,5 +1,5 @@
 
-const CounterProductReducer = (state = 0, action) => {
+const CounterProductReducer = (state = 1, action) => {
     switch(action.type) {
         case "inc": {
             return state + 1

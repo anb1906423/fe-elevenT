@@ -8,7 +8,7 @@ const ProductItem = (props) => {
     // }
     return (
         <div className='product-item'>
-            <a href={`${frontendAPI}/san-pham/${props.product_id}/${props.colour_id}`}>
+            <a href={`${frontendAPI}/san-pham/${props.product_id}?colour=${props.colour_id}`}>
                 <div className="position-relative img-box">
                     <img className='img' src={props.img} alt="" />
                     <div className="position-absolute rate-box">
