@@ -9,10 +9,9 @@
     color           : #000;
     min-width       : 66px;
     transition      : all 0.2s ease-in-out;
+}
 
-    &:focus,
-    &:hover {
-        color           : #fff;
-        background-color: #000;
-    }
+.option-button.focus {
+    color           : #fff;
+    background-color: #000;
 }

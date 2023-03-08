@@ -8,8 +8,7 @@ const OptionButton = (props) => {
             ref={buttonRef}
             tabIndex="0"
             onClick={props.getContent}
-            className={`option-button d-inline-block text-center ${props.selected ? 'focus' : ''}`}
-        // Thêm class 'selected' nếu props.selected được truyền vào
+            className={`option-button d-inline-block text-center ${props.isSelected ? 'focus' : ''}`}
         >
             <span>{props.content}</span>
         </div>

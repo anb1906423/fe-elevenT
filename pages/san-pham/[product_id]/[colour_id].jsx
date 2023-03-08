@@ -1,30 +1,31 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
-import axios from 'axios'
-import { backendAPI } from '@/config'
+import { useDispatch, useSelector } from 'react-redux'
 import CarouselFade from '@/components/Carousel'
 import { Rate } from 'antd';
 import { StarFilled, PlusOutlined, MinusOutlined } from '@ant-design/icons'
-import OptionButton from '@/components/OptionButton'
-import { useDispatch, useSelector } from 'react-redux'
-import PolicyItem from '@/components/PolicyItem'
-import { policyList } from '@/data/PolicyData'
+import axios from 'axios'
 
-const colourList = ['Trắng', 'Đen', 'Xám', 'Đỏ dịu dàng']
-const sizeList = ['L', 'M', 'XL']
-const product_image = [
+import { backendAPI } from '@/config'
+import { policyList } from '@/data/PolicyData'
+import PolicyItem from '@/components/PolicyItem'
+import OptionButton from '@/components/OptionButton'
+
+const fakeColourList = [ { colour_id: 1, colour_name: 'Trắng' }, { colour_id: 2, colour_name: 'Đen' } ];
+const fakeSizeList = [ { size_id: 1, size_name: 'S' }, { size_id: 2, size_name: 'M' }, { size_id: 3, size_name: 'L' } ];
+const fake_product_image = [
   'https://media.coolmate.me/cdn-cgi/image/quality=80/image/September2022/untitled-5_32.jpg',
   'https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/November2021/1426x2100_(3).jpg',
   'https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/September2022/DSC04797-copy-1.jpg',
-]
+];
 
 const ProductDetail = () => {
 
   const countProduct = useSelector(state => state.counterProduct);
   const dispatch = useDispatch()
   const router = useRouter()
-  const [productIdFromParams, setProductIdFromParams] = useState('')
-  const [colourIdFromParams, setColourIdFromParams] = useState('')
+  const [productIdFromParams, setProductIdFromParams] = useState('1');
+  const [colourIdFromParams, setColourIdFromParams] = useState('1');
 
   const [productId, setProductId] = useState('')
   const [productName, setProductName] = useState('')
@@ -33,58 +34,93 @@ const ProductDetail = () => {
   const [rating, setRating] = useState('')
   const [sold, setSold] = useState('')
 
+  const [colorList, setColorList] = useState([]);
+  const [selectedColorIndex, setSelectedColorIndex] = useState(null);
+  const [sizeList, setSizeList] = useState([]);
+  const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
+
   const [price, setPrice] = useState('189.000')
-  const [colorList, setColorList] = useState(colourList)
-  const [selectedColor, setSelectedColor] = useState('Trắng')
-  const [selectedSize, setSelectedSize] = useState('L')
-  const [listImg, setListImg] = useState([])
+  const [product_image, setProduct_Image] = useState([]);
 
-  const [selectedColorIndex, setSelectedColorIndex] = useState(0);
-  const [selectedSizeIndex, setSelectedSizeIndex] = useState(0);
 
-  const colourButtonRef = useRef(null);
-  const sizeButtonRef = useRef(null);
+  // const colourButtonRef = useRef(null);
+  // const sizeButtonRef = useRef(null);
 
-  useEffect(() => {
-    if (colourButtonRef.current) {
-      colourButtonRef.current.querySelector('.option-button').focus();
-    }
-    if (sizeButtonRef.current) {
-      sizeButtonRef.current.querySelector('.option-button').focus();
-    }
-  }, [sizeList, colorList]);
+  // useEffect(() => {
+  //   if (colourButtonRef.current) {
+  //     colourButtonRef.current.querySelector('.option-button').focus();
+  //   }
+  //   if (sizeButtonRef.current) {
+  //     sizeButtonRef.current.querySelector('.option-button').focus();
+  //   }
+  // }, [sizeList, colorList]);
 
   useEffect(() => {
     const handleGetProduct = async () => {
       try {
-        const result = await axios.get(backendAPI + `/api/product/customer/detail/1`)
+        let respond = await axios.get(backendAPI + `/api/product/customer/detail/${productIdFromParams}`);
+        setProductId(respond.data.product_id);
+        setProductName(respond.data.product_name);
+        setProductDescription(respond.data.description);
+        setFeedbackQuantity(respond.data.feedback_quantity);
+        setRating(respond.data.rating);
+        setSold(respond.data.sold);
 
-        setProductId(result.data.product_id)
-        setProductName(result.data.product_name)
-        setProductDescription(result.data.description)
-        setFeedbackQuantity(result.data.feedback_quantity)
-        setRating(result.data.rating)
-        setSold(result.data.sold)
-
-        console.log(result.data);
+        respond = await axios.get(backendAPI + `/api/product/customer/list-colour/${productIdFromParams}`);
+        setColorList(respond.data);
+        setSelectedColorIndex(0);
       } catch (error) {
         console.log(error);
+        setColorList(fakeColourList);
+        setSelectedColorIndex(0);
       }
     }
-
-    handleGetProduct()
-
+    handleGetProduct();
   }, [])
 
   useEffect(() => {
-    // console.log(productId);
-    // console.log(productName);
-    // console.log(productDescription);
-    // console.log(feedbackQuantity);
-    // console.log(sold, rating);
-    console.log(router.query.product_id);
-    console.log(selectedColor);
-  }, [productId, productName, selectedColor])
+    const handleGetListColour = async () => {
+      try {
+        let respond = await axios.get(backendAPI + '/api/product/customer/list-size'
+          + '/' + productIdFromParams
+          + '/' + colorList[selectedColorIndex].colour_id
+        );
+        setSizeList(respond.data);
+        setSelectedSizeIndex(0);
+      } catch (error) {
+        console.log(error);
+        setSizeList(fakeSizeList);
+        setSelectedSizeIndex(0);
+      }
+    }
+    if(selectedColorIndex !== null) {
+      handleGetListColour();
+    }
+  }, [selectedColorIndex]);
+
+  useEffect(() => {
+    const handleGetProductVariant = async () => {
+      try {
+        let respond = await axios.get(backendAPI + '/api/product-variant/customer/detail'
+          + '/' + productIdFromParams
+          + '/' + colorList[selectedColorIndex].colour_id
+          + '/' + sizeList[selectedSizeIndex].size_id
+        );
+        setProduct_Image(respond.data.product_images);
+      } catch (error) {
+        console.log(error);
+        setProduct_Image(fake_product_image);
+      }
+    }
+    if(selectedColorIndex !== null && selectedSizeIndex !== null) {
+      handleGetProductVariant();
+    }
+  }, [selectedColorIndex ,selectedSizeIndex]);
+
+  // useEffect(() => {
+  //   console.log(router.query.product_id);
+  //   console.log(selectedColor);
+  // }, [productId, productName, selectedColor])
 
   return (
     <div className='product-detail-page'>
@@ -102,14 +138,18 @@ const ProductDetail = () => {
             <span>Đã bán (web): {sold}</span>
           </div>
           <div className="colour-option-box">
-            <span>Màu: <strong>{colorList[selectedColorIndex]}</strong></span>
-            <div ref={colourButtonRef}>
+            <span>Màu: 
+              <strong>
+                {colorList[selectedColorIndex] ? colorList[selectedColorIndex].colour_name: ''}
+              </strong>
+            </span>
+            <div>
               {colorList &&
-                colorList.map((item, index) => {
+                colorList.map((colour, index) => {
                   return (
                     <OptionButton
                       getContent={() => setSelectedColorIndex(index)}
-                      content={item}
+                      content={colour.colour_name}
                       key={index}
                       isSelected={selectedColorIndex === index}
                     />
@@ -118,14 +158,18 @@ const ProductDetail = () => {
             </div>
           </div>
           <div className="size-option-box">
-            <span>Kích cỡ: <strong>{sizeList[selectedSizeIndex]}</strong></span>
-            <div ref={sizeButtonRef}>
+            <span>Kích cỡ: 
+              <strong>
+                {sizeList[selectedSizeIndex] ? sizeList[selectedSizeIndex].size_name : ''}
+              </strong>
+            </span>
+            <div>
               {sizeList &&
-                sizeList.map((item, index) => {
+                sizeList.map((size, index) => {
                   return (
                     <OptionButton
                       getContent={() => setSelectedSizeIndex(index)}
-                      content={item}
+                      content={size.size_name}
                       key={index}
                       isSelected={selectedSizeIndex === index}
                     />
