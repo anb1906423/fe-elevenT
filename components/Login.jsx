@@ -1,28 +1,35 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaTimes } from 'react-icons/fa'
+import { useDispatch } from 'react-redux'
 import axios from 'axios'
-import { backendAPI } from '@/config'
 import { swalert, swtoast } from '@/mixins/swal.mixin'
+import { FaTimes } from 'react-icons/fa'
+
+import { backendAPI } from '@/config'
+import { customerLoginOrRegister } from '../store/actions/customerActions'
 
 const Login = (props) => {
-	const userRef = useRef()
-	const pwdRef = useRef()
-	const [username, setUsername] = useState('')
+	const emailInputRef = useRef()
+	const passwordInputRef = useRef()
+	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const dispatch = useDispatch()
 
 	useEffect(() => {
-		userRef.current.focus()
+		emailInputRef.current.focus()
 	}, [])
 
-	const handleLogin = async () => {
+	const handleLogin = async (e) => {
+		e.preventDefault();
 		try {
-			const result = await axios.post(`${backendAPI}/api/customer/login`, {
-				email: username,
+			const respond = await axios.post(`${backendAPI}/api/customer/login`, {
+				email: email,
 				password: password
 			})
+			dispatch(customerLoginOrRegister(respond.data));
 			swtoast.success({
 				text: "Đăng nhập tài khoản thành công!"
 			})
+			props.toClose();
 		} catch (error) {
 			swtoast.error({
 				text: error.response.data
@@ -39,19 +46,21 @@ const Login = (props) => {
 				<form action="" onSubmit={handleLogin} className="form-user form-login">
 					<h3 className="heading">Đăng nhập</h3>
 					<input
-						type="text"
+						type="email"
 						className='w-100 border-radius'
-						placeholder='Email / Số điện thoại'
-						ref={userRef}
-						value={username}
-						onChange={(e) => setUsername(e.target.value)}
+						placeholder='Email'
+						ref={emailInputRef}
+						value={email}
+						required
+						onChange={(e) => setEmail(e.target.value)}
 					/>
 					<input
 						type="password"
 						className='w-100 border-radius'
 						placeholder='Mật khẩu'
-						ref={pwdRef}
+						ref={passwordInputRef}
 						value={password}
+						required
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button className='w-100 border-radius' type='submit'>Đăng nhập</button>

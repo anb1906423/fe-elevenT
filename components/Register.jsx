@@ -1,8 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
-import { FaTimes } from 'react-icons/fa';
+import { useDispatch } from 'react-redux'
 import axios from 'axios';
 import { swalert, swtoast } from '@/mixins/swal.mixin'
+import { FaTimes } from 'react-icons/fa';
+
 import { backendAPI } from '@/config'
+import { customerLoginOrRegister } from '../store/actions/customerActions'
 
 const Register = (props) => {
     const fullNameRef = useRef()
@@ -17,12 +20,24 @@ const Register = (props) => {
     const [password, setPassword] = useState('')
     const [passwordAgain, setPasswordAgain] = useState('')
     const [err, setErr] = useState('')
+    const dispatch = useDispatch()
 
     useEffect(() => {
         fullNameRef.current.focus()
     }, [])
 
-    const handleRegister = async () => {
+    const handleRegister = async (e) => {
+        e.preventDefault();
+        if (fullName == '') {
+            setErr("Tên không được để trống!!");
+            fullNameRef.current.focus()
+            return
+        }
+        if (phoneNumber == '') {
+            setErr("Số điện thoại không được để trống!!");
+            phoneNumberRef.current.focus()
+            return
+        }
         if (email == '') {
             setErr("Email không được để trống!!");
             emailRef.current.focus()
@@ -39,13 +54,17 @@ const Register = (props) => {
             return
         }
         try {
-            const result = await axios.post(`${backendAPI}/api/customer/register`, {
+            const respond = await axios.post(`${backendAPI}/api/customer/register`, {
                 email: email,
-                password: password
+                password: password,
+                customer_name: fullName,
+                phone_number: phoneNumber
             })
+            dispatch(customerLoginOrRegister(respond.data))
             swtoast.success({
                 text: "Đăng ký tài khoản thành công!"
             })
+            props.toClose();
         } catch (error) {
             swtoast.error({
                 text: error.response.data
