@@ -1,0 +1,20 @@
+.title-div {
+    margin: 2rem 0;
+
+    .title {
+        font-weight: 600;
+    }
+}
+
+// account infor page
+.infor-tab {
+    .infor-tab-item {
+        margin-bottom: 1rem;
+
+        input {
+            padding      : 5px 20px;
+            border-radius: 10px;
+            border       : 1px solid #ccc;
+        }
+    }
+}
