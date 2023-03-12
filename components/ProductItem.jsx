@@ -1,6 +1,7 @@
 import React from 'react'
 import { StarFilled } from '@ant-design/icons'
 import { frontendAPI } from '@/config'
+import Link from "next/link";
 
 const ProductItem = (props) => {
     // const mergeId = (product_id, colour_id) = {
@@ -8,7 +9,7 @@ const ProductItem = (props) => {
     // }
     return (
         <div className='product-item'>
-            <a href={`${frontendAPI}/san-pham/${props.product_id}?colour=${props.colour_id}`}>
+            <Link href={{ pathname: `${frontendAPI}/san-pham/${props.product_id}`, query: { colour: props.colour_id } }}>
                 <div className="position-relative img-box">
                     <img className='img' src={props.img} alt="" />
                     <div className="position-absolute rate-box">
@@ -38,7 +39,7 @@ const ProductItem = (props) => {
                         }
                     </div>
                 </div>
-            </a>
+            </Link>
             <div className="infor-product">
                 <a href={props.id}>
                     <h6>{props.name}</h6>

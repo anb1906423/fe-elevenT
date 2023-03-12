@@ -1,15 +1,15 @@
 import React, { useEffect, useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
-import CarouselFade from '@/components/Carousel'
+import axios from 'axios'
 import { Rate } from 'antd';
 import { StarFilled, PlusOutlined, MinusOutlined } from '@ant-design/icons'
-import axios from 'axios'
 
-import { backendAPI } from '@/config'
-import { policyList } from '@/data/PolicyData'
+import CarouselFade from '@/components/Carousel'
 import PolicyItem from '@/components/PolicyItem'
 import OptionButton from '@/components/OptionButton'
+import { backendAPI } from '@/config'
+import { policyList } from '@/data/PolicyData'
 
 const fakeColourList = [{ colour_id: 1, colour_name: 'Trắng' }, { colour_id: 2, colour_name: 'Đen' }];
 const fakeSizeList = [{ size_id: 1, size_name: 'S' }, { size_id: 2, size_name: 'M' }, { size_id: 3, size_name: 'L' }];
@@ -21,13 +21,10 @@ const fake_product_image = [
 
 const ProductDetail = () => {
 
-	const countProduct = useSelector(state => state.counterProduct);
-	const dispatch = useDispatch()
 	const router = useRouter()
-	const [productIdFromParams, setProductIdFromParams] = useState('1');
-	const [colourIdFromParams, setColourIdFromParams] = useState('1');
+	const { product_id, colour } = router.query
+	const dispatch = useDispatch()
 
-	const [productId, setProductId] = useState('')
 	const [productName, setProductName] = useState('')
 	const [productDescription, setProductDescription] = useState('')
 	const [feedbackQuantity, setFeedbackQuantity] = useState('')
@@ -39,50 +36,45 @@ const ProductDetail = () => {
 	const [sizeList, setSizeList] = useState([]);
 	const [selectedSizeIndex, setSelectedSizeIndex] = useState(null);
 
-	const [price, setPrice] = useState('189.000')
+	const [productVariantId, setProductVariantId] = useState('')
+	const [inventory, setInventory] = useState(0)
+	const [quantity, setQuantity] = useState(0)
+	const [price, setPrice] = useState('0')
 	const [product_image, setProduct_Image] = useState([]);
-
-
-	// const colourButtonRef = useRef(null);
-	// const sizeButtonRef = useRef(null);
-
-	// useEffect(() => {
-	//   if (colourButtonRef.current) {
-	//     colourButtonRef.current.querySelector('.option-button').focus();
-	//   }
-	//   if (sizeButtonRef.current) {
-	//     sizeButtonRef.current.querySelector('.option-button').focus();
-	//   }
-	// }, [sizeList, colorList]);
 
 	useEffect(() => {
 		const handleGetProduct = async () => {
 			try {
-				let respond = await axios.get(backendAPI + `/api/product/customer/detail/${productIdFromParams}`);
-				setProductId(respond.data.product_id);
+				let respond = await axios.get(backendAPI + `/api/product/customer/detail/${product_id}`);
 				setProductName(respond.data.product_name);
 				setProductDescription(respond.data.description);
 				setFeedbackQuantity(respond.data.feedback_quantity);
 				setRating(respond.data.rating);
 				setSold(respond.data.sold);
 
-				respond = await axios.get(backendAPI + `/api/product/customer/list-colour/${productIdFromParams}`);
+				respond = await axios.get(backendAPI + `/api/product/customer/list-colour/${product_id}`);
 				setColorList(respond.data);
 				setSelectedColorIndex(0);
+				for (let index in respond.data) {
+					if (respond.data[index].colour_id == colour)
+						setSelectedColorIndex(parseInt(index));
+				}
 			} catch (error) {
 				console.log(error);
 				setColorList(fakeColourList);
 				setSelectedColorIndex(0);
 			}
 		}
-		handleGetProduct();
-	}, [])
+		if (product_id !== undefined) {
+			handleGetProduct();
+		}
+	}, [product_id])
 
 	useEffect(() => {
 		const handleGetListColour = async () => {
 			try {
 				let respond = await axios.get(backendAPI + '/api/product/customer/list-size'
-					+ '/' + productIdFromParams
+					+ '/' + product_id
 					+ '/' + colorList[selectedColorIndex].colour_id
 				);
 				setSizeList(respond.data);
@@ -102,10 +94,13 @@ const ProductDetail = () => {
 		const handleGetProductVariant = async () => {
 			try {
 				let respond = await axios.get(backendAPI + '/api/product-variant/customer/detail'
-					+ '/' + productIdFromParams
+					+ '/' + product_id
 					+ '/' + colorList[selectedColorIndex].colour_id
 					+ '/' + sizeList[selectedSizeIndex].size_id
 				);
+				setProductVariantId(respond.data.product_variant_id)
+				setInventory(respond.data.quantity)
+				setPrice(respond.data.price)
 				setProduct_Image(respond.data.product_images);
 			} catch (error) {
 				console.log(error);
@@ -116,11 +111,6 @@ const ProductDetail = () => {
 			handleGetProductVariant();
 		}
 	}, [selectedColorIndex, selectedSizeIndex]);
-
-	// useEffect(() => {
-	//   console.log(router.query.product_id);
-	//   console.log(selectedColor);
-	// }, [productId, productName, selectedColor])
 
 	return (
 		<div className='product-detail-page'>
@@ -151,7 +141,10 @@ const ProductDetail = () => {
 								colorList.map((colour, index) => {
 									return (
 										<OptionButton
-											getContent={() => setSelectedColorIndex(index)}
+											getContent={() => {
+												setSelectedColorIndex(index)
+												router.push(`http://localhost:3000/san-pham/${product_id}?colour=${colour.colour_id}`)
+											}}
 											content={colour.colour_name}
 											key={index}
 											isSelected={selectedColorIndex === index}
@@ -182,9 +175,9 @@ const ProductDetail = () => {
 					</div>
 					<div className="action-box row">
 						<div className="fw-bold quantity-button col-3 d-flex justify-content-around align-items-center">
-							<PlusOutlined />
-							<span>{countProduct != undefined ? countProduct : 0}</span>
-							<MinusOutlined />
+							<PlusOutlined onClick={() => setQuantity(quantity + 1)} />
+							<span>{quantity}</span>
+							<MinusOutlined onClick={() => setQuantity(quantity - 1)} />
 						</div>
 						<div className="add-product-to-cart-button col-7 d-flex justify-content-around align-items-center">
 							Thêm vào giỏ hàng
@@ -205,6 +198,7 @@ const ProductDetail = () => {
 			<div className="row product-detail">
 				<div className="col-12">
 					<h5 className='text-center'>Chi tiết sản phẩm</h5>
+					<div>{productDescription}</div>
 				</div>
 			</div>
 			<div className="review-box position-relative d-flex align-items-center">
