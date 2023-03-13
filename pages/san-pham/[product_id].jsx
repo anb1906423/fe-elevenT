@@ -3,13 +3,15 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Rate } from 'antd';
-import { StarFilled, PlusOutlined, MinusOutlined } from '@ant-design/icons'
+import { swtoast } from '@/mixins/swal.mixin'
 
 import CarouselFade from '@/components/Carousel'
 import PolicyItem from '@/components/PolicyItem'
 import OptionButton from '@/components/OptionButton'
+import ProductQuantityInput from '@/components/ProductQuantityInput'
 import { backendAPI } from '@/config'
 import { policyList } from '@/data/PolicyData'
+import { addToCart, clearError } from '@/store/actions/cartActions'
 
 const fakeColourList = [{ colour_id: 1, colour_name: 'Trắng' }, { colour_id: 2, colour_name: 'Đen' }];
 const fakeSizeList = [{ size_id: 1, size_name: 'S' }, { size_id: 2, size_name: 'M' }, { size_id: 3, size_name: 'L' }];
@@ -24,6 +26,8 @@ const ProductDetail = () => {
 	const router = useRouter()
 	const { product_id, colour } = router.query
 	const dispatch = useDispatch()
+	const isErrorInCart = useSelector((state) => state.cart.isError)
+	const messageErrorInCart = useSelector((state) => state.cart.messageError)
 
 	const [productName, setProductName] = useState('')
 	const [productDescription, setProductDescription] = useState('')
@@ -38,7 +42,7 @@ const ProductDetail = () => {
 
 	const [productVariantId, setProductVariantId] = useState('')
 	const [inventory, setInventory] = useState(0)
-	const [quantity, setQuantity] = useState(0)
+	const [quantity, setQuantity] = useState(1)
 	const [price, setPrice] = useState('0')
 	const [product_image, setProduct_Image] = useState([]);
 
@@ -112,6 +116,32 @@ const ProductDetail = () => {
 		}
 	}, [selectedColorIndex, selectedSizeIndex]);
 
+	useEffect(() => {
+		if (isErrorInCart) {
+			swtoast.fire({
+				text: messageErrorInCart
+			});
+			dispatch(clearError());
+		}
+	}, [isErrorInCart])
+
+	const handleAddToCart = () => {
+		let product = {
+			productVariantId: productVariantId,
+			name: productName,
+			colour: colorList[selectedColorIndex].colour_name,
+			size: sizeList[selectedSizeIndex].size_name,
+			image: product_image[0],
+			price: price,
+			inventory: inventory,
+			quantity: quantity
+		}
+		dispatch(addToCart(product));
+		setQuantity(1);
+		if (!isErrorInCart)
+			swtoast.success({ text: "Thêm sản phẩm vào giỏ hàng thành công" });
+	}
+
 	return (
 		<div className='product-detail-page'>
 			<div className="row main-infor-product">
@@ -174,12 +204,8 @@ const ProductDetail = () => {
 						</div>
 					</div>
 					<div className="action-box row">
-						<div className="fw-bold quantity-button col-3 d-flex justify-content-around align-items-center">
-							<PlusOutlined onClick={() => setQuantity(quantity + 1)} />
-							<span>{quantity}</span>
-							<MinusOutlined onClick={() => setQuantity(quantity - 1)} />
-						</div>
-						<div className="add-product-to-cart-button col-7 d-flex justify-content-around align-items-center">
+						<ProductQuantityInput quantity={quantity} setQuantity={setQuantity} />
+						<div className="add-product-to-cart-button col-7 d-flex justify-content-around align-items-center" onClick={handleAddToCart}>
 							Thêm vào giỏ hàng
 						</div>
 					</div>
@@ -207,7 +233,7 @@ const ProductDetail = () => {
 					<h5 className='rating-detail d-inline-block'>{rating} / 5 ⭐</h5>
 				</div>
 			</div>
-		</div>
+		</div >
 	)
 }
 
