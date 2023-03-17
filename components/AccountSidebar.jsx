@@ -25,10 +25,10 @@ const AccountSidebar = () => {
                         sidebar && sidebar.map((item, index) => {
                             if (item.href == urlParts) {
                                 return (
-                                    <li key={index} className='w-100'><Link style={sidebarItemFocus} className='d-block' href={item.href}>{item.text}</Link></li>
+                                    <li key={index} onClick={() => item.onClick()} className='w-100'><Link style={sidebarItemFocus} className='d-block border-radius' href={item.href}>{item.text}</Link></li>
                                 )
                             } else return (
-                                <li key={index} className='w-100'><Link className='d-block' href={item.href}>{item.text}</Link></li>
+                                <li key={index} onClick={() => item.onClick()} className='w-100'><Link className='d-block border-radius' href={item.href}>{item.text}</Link></li>
                             )
                         })
                     }

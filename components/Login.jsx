@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 import axios from 'axios'
 import { swalert, swtoast } from '@/mixins/swal.mixin'
 import { FaTimes } from 'react-icons/fa'
+import Input from '@/components/Input'
 
 import { backendAPI } from '@/config'
 import { customerLoginOrRegister } from '../store/actions/customerActions'
@@ -14,12 +15,23 @@ const Login = (props) => {
 	const [password, setPassword] = useState('')
 	const dispatch = useDispatch()
 
-	useEffect(() => {
-		emailInputRef.current.focus()
-	}, [])
+	const [emailError, setEmailError] = useState('')
+	const [pwdError, setPwdError] = useState('')
 
 	const handleLogin = async (e) => {
 		e.preventDefault();
+		if (!email) {
+			setEmailError("Địa chỉ email không được để trống!")
+			setPwdError('')
+			emailInputRef.current.focus()
+			return 
+		}
+		if (!password) {
+			setPwdError("Mật khẩu không được để trống!")
+			setEmailError('')
+			passwordInputRef.current.focus()
+			return 
+		}
 		try {
 			const respond = await axios.post(`${backendAPI}/api/customer/login`, {
 				email: email,
@@ -45,22 +57,24 @@ const Login = (props) => {
 				</div>
 				<form action="" onSubmit={handleLogin} className="form-user form-login">
 					<h3 className="heading">Đăng nhập</h3>
-					<input
+					<Input
 						type="email"
 						className='w-100 border-radius'
 						placeholder='Email'
-						ref={emailInputRef}
+						inputRef={emailInputRef}
 						value={email}
 						required
 						onChange={(e) => setEmail(e.target.value)}
+						error={emailError}
 					/>
-					<input
+					<Input
 						type="password"
 						className='w-100 border-radius'
 						placeholder='Mật khẩu'
-						ref={passwordInputRef}
+						inputRef={passwordInputRef}
 						value={password}
 						required
+						error={pwdError}
 						onChange={(e) => setPassword(e.target.value)}
 					/>
 					<button className='w-100 border-radius' type='submit'>Đăng nhập</button>

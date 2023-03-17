@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import Link from 'next/link'
 import Swal from "sweetalert2";
 import { FaUserAlt, FaShoppingCart, FaShoppingBag } from 'react-icons/fa'
+import { swalert } from '@/mixins/swal.mixin';
 
 import Login from "./Login"
 import Register from './Register';
@@ -20,22 +21,6 @@ const Header = () => {
 		setIsLogInOpen(false)
 		setIsRegisterOpen(false)
 	}
-	// const taiKhoan = [
-	// 	{
-	// 		title: <FaUserAlt />,
-	// 		function: () => {
-	// 			setIsLogInOpen(true)
-	// 		},
-	// 		href: '#',
-	// 	},
-	// 	{
-	// 		title: <FaShoppingBag />,
-	// 		function: () => {
-	// 			console.log("Cart Page");
-	// 		},
-	// 		href: '#',
-	// 	},
-	// ]
 
 	return (
 		<div className="header-wrapper position-relation">
@@ -80,7 +65,7 @@ const Header = () => {
 										href={item.href}
 									>
 										{item.title}
-										<div>{item.icon}</div>
+										<span>{item.icon}</span>
 									</a>
 									<ul className='sub-menu position-absolute'>
 										{
@@ -116,21 +101,39 @@ const Header = () => {
 					} */}
 					{
 						!isLoggedIn ?
-							<li onClick={() => setIsLogInOpen(true)} className="inner-item menu-item fw-bold text-uppercase">
+							<li onClick={() => {
+								setIsLogInOpen(true)
+							}}
+								className="inner-item menu-item fw-bold text-uppercase">
 								<a href='#'>Đăng Nhập</a>
 							</li>
 							:
 							<>
 								<li className="inner-item menu-item fw-bold text-uppercase">
-									<a href='#'>Account</a>
+									<a href='/account/infor'>Account</a>
 								</li>
-								<li onClick={() => dispatch(customerLogOut())} className="inner-item menu-item fw-bold text-uppercase">
+								<li onClick={() => {
+									swalert
+										.fire({
+											title: "Đăng xuất",
+											icon: "warning",
+											text: "Bạn muốn đăng xuất?",
+											showCloseButton: true,
+											showCancelButton: true,
+										})
+										.then(async (result) => {
+											if (result.isConfirmed) {
+												dispatch(customerLogOut())
+												window.location.assign('/')
+											}
+										})
+								}} className="inner-item menu-item fw-bold text-uppercase">
 									<a href='#'>Log Out</a>
 								</li>
 							</>
 					}
 					<li className="inner-item menu-item fw-bold text-uppercase">
-						<a href='#'><FaShoppingBag /></a>
+						<a href='/cart'><FaShoppingBag /></a>
 					</li>
 				</ul>
 			</div>

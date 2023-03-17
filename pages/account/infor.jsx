@@ -1,6 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import AccountSidebar from '@/components/AccountSidebar'
+import Input from '@/components/Input'
 
 const AccountInfor = () => {
     return (
@@ -21,8 +22,7 @@ const AccountInfor = () => {
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
                         <div className="col-3">Họ tên</div>
                         <div className="col-7">
-                            <input
-                                className='w-100'
+                            <Input
                                 type="text"
                                 placeholder='Họ và tên của bạn'
                             />
@@ -31,8 +31,7 @@ const AccountInfor = () => {
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
                         <div className="col-3">Email</div>
                         <div className="col-7">
-                            <input
-                                className='w-100'
+                            <Input
                                 type="email"
                                 placeholder='Địa chỉ email'
                             />
@@ -41,8 +40,7 @@ const AccountInfor = () => {
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
                         <div className="col-3">Số điện thoại</div>
                         <div className="col-7">
-                            <input
-                                className='w-100'
+                            <Input
                                 type="text"
                                 placeholder='Số điện thoại'
                             />
@@ -51,8 +49,7 @@ const AccountInfor = () => {
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
                         <div className="col-3">Địa chỉ</div>
                         <div className="col-7">
-                            <input
-                                className='w-100'
+                            <Input
                                 type="text"
                                 placeholder='Địa chỉ (Ví dụ: 112/12 3/2 Hưng Lợi, Ninh Kiều)'
                             />

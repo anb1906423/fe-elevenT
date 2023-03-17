@@ -17,12 +17,12 @@ const orders = () => {
                         </h3>
                     </div>
                     <div className="orders-body">
-                        {orders.length === 0 ?
+                        {orders && orders.length === 0 ?
                             <p className='text-center'>Bạn chưa có đơn hàng nào!</p>
                             :
                             orders.map((item, index) => {
                                 return (
-                                    <>orderComponent</>
+                                    <div key={index}>orderComponent</div>
                                 )
                             })
                         }

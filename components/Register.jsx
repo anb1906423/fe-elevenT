@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch } from 'react-redux'
 import axios from 'axios';
 import { swalert, swtoast } from '@/mixins/swal.mixin'
+import Input from "@/components/Input"
 import { FaTimes } from 'react-icons/fa';
 
 import { backendAPI } from '@/config'
@@ -19,37 +20,68 @@ const Register = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordAgain, setPasswordAgain] = useState('')
-    const [err, setErr] = useState('')
+    
     const dispatch = useDispatch()
 
-    useEffect(() => {
-        fullNameRef.current.focus()
-    }, [])
+    const [fullNameError, setFullNameError] = useState('')
+    const [phoneNumberError, setPhoneNumberError] = useState('')
+    const [emailError, setEmailError] = useState('')
+    const [pwdError, setPwdError] = useState('')
+    const [pwdAgainError, setPwdAgainError] = useState('')
 
     const handleRegister = async (e) => {
         e.preventDefault();
         if (fullName == '') {
-            setErr("Tên không được để trống!!");
+            setFullNameError("Tên không được để trống!!");
+            setPhoneNumberError('')
+            setEmailError('')
+            setPwdError('')
+            setPwdAgainError('')
             fullNameRef.current.focus()
             return
         }
         if (phoneNumber == '') {
-            setErr("Số điện thoại không được để trống!!");
+            setPhoneNumberError("Số điện thoại không được để trống!!");
+            setFullNameError('');
+            setEmailError('')
+            setPwdError('')
+            setPwdAgainError('')
             phoneNumberRef.current.focus()
             return
         }
         if (email == '') {
-            setErr("Email không được để trống!!");
+            setEmailError("Email không được để trống!!");
+            setFullNameError("");
+            setPhoneNumberError('')
+            setPwdError('')
+            setPwdAgainError('')
             emailRef.current.focus()
             return
         }
         if (password == '') {
-            setErr("Password không được để trống!!");
+            setPwdError("Password không được để trống!!");
+            setFullNameError("");
+            setPhoneNumberError('')
+            setEmailError('')
+            setPwdAgainError('')
             pwdRef.current.focus()
             return
         }
         if (passwordAgain == '') {
-            setErr("Vui lòng nhập lại mật khẩu!!");
+            setPwdAgainError("Vui lòng nhập lại mật khẩu!!");
+            setFullNameError("");
+            setPhoneNumberError('')
+            setEmailError('')
+            setPwdError('')
+            pwdAgainRef.current.focus()
+            return
+        }
+        if (passwordAgain != password) {
+            setPwdAgainError("Mật khẩu nhập lại chưa đúng!!");
+            setFullNameError("");
+            setPhoneNumberError('')
+            setEmailError('')
+            setPwdError('')
             pwdAgainRef.current.focus()
             return
         }
@@ -79,49 +111,51 @@ const Register = (props) => {
                 </div>
                 <form action="" onSubmit={handleRegister} className="form-user form-register">
                     <h3 className="heading text-center">Đăng ký tài khoản</h3>
-                    <input
+                    <Input
                         type="text"
                         className='w-100 border-radius'
                         placeholder='Họ và tên'
-                        ref={fullNameRef}
+                        inputRef={fullNameRef}
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
+                        error={fullNameError}
                     />
-                    <input
+                    <Input
                         type="text"
                         className='w-100 border-radius'
                         placeholder='Số điện thoại'
-                        ref={phoneNumberRef}
+                        inputRef={phoneNumberRef}
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
+                        error={phoneNumberError}
                     />
-                    <input
+                    <Input
                         type="email"
                         className='w-100 border-radius'
                         placeholder='Email'
-                        ref={emailRef}
+                        inputRef={emailRef}
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
+                        error={emailError}
                     />
-                    <input
+                    <Input
                         type="password"
                         className='w-100 border-radius'
                         placeholder='Mật khẩu'
-                        ref={pwdRef}
+                        inputRef={pwdRef}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
+                        error={pwdError}
                     />
-                    <input
+                    <Input
                         type="password"
                         className='w-100 border-radius'
                         placeholder='Nhập lại mật khẩu'
-                        ref={pwdAgainRef}
+                        inputRef={pwdAgainRef}
                         value={passwordAgain}
                         onChange={(e) => setPasswordAgain(e.target.value)}
+                        error={pwdAgainError}
                     />
-                    <div className="box-err text-danger text-left">
-                        {err}
-                    </div>
                     <button className='w-100 border-radius' type='submit'>Đăng ký</button>
                 </form>
                 <div className="footer-form d-flex justify-content-center">

@@ -4,6 +4,7 @@
 @import './ProductItem.scss';
 @import './AccountInfor.scss';
 @import './ProductDetail.scss';
+@import './Cart.scss';
 @import './components/Carousel.scss';
 @import './components/OptionButton.scss';
 @import './components/PolicyItem.scss';
@@ -15,9 +16,13 @@
     box-sizing: border-box;
 }
 
+// .border-radius {
+//     border-radius: 6px;
+//     padding: 6px 12px;
+// }
+
 .border-radius {
-    border-radius: 6px;
-    padding: 6px 12px;
+    border-radius: 16px;
 }
 
 html {
