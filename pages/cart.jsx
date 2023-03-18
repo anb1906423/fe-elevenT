@@ -1,13 +1,41 @@
 import React, { useState, useEffect, useRef } from 'react'
 import Input from '@/components/Input'
+import { useSelector, useDispatch } from 'react-redux'
+import CartItem from '@/components/CartItem'
 
 const Cart = () => {
+    const [productList, setProductList] = useState([])
+    const customerInfo = useSelector((state) => state.customer.customerInfo)
+    const cart = useSelector((state) => state.cart.productList)
     const [customerName, setCustomerName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [email, setEmail] = useState('')
     const [address, setAddress] = useState('')
 
+    const [discount, setDiscount] = useState(0)
+
     const [error, setError] = useState('')
+
+    const totalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0)
+    
+    const addPointToPrice = (price) => {
+        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+    }
+
+    const finalDiscount = (price, discount) => {
+        return price * discount / 100
+    }
+
+    const finalTotal = (price, discount) => {
+        return price * (100 - discount) / 100
+    }
+
+    useEffect(() => {
+        setEmail(customerInfo.email)
+        setCustomerName(customerInfo.customer_name)
+        setPhoneNumber(customerInfo.phone_number)
+        console.log(cart);
+    }, [customerInfo])
 
     return (
         <div className="cart">
@@ -61,6 +89,47 @@ const Cart = () => {
                         <h3 className="title">
                             Giỏ hàng
                         </h3>
+                    </div>
+                    <div className="cart-section">
+                        {
+                            cart && cart.map((item, index) => {
+                                return (
+                                    <CartItem
+                                        key={index}
+                                        image={item.image}
+                                        quantity={item.quantity}
+                                        name={item.name}
+                                        colour={item.colour}
+                                        size={item.size}
+                                    />
+
+                                )
+                            })
+                        }
+                    </div>
+                    <div className="row pricing-info position-relative">
+                        <div className="pricing-info-item d-flex justify-content-between">
+                            <p>
+                                Tạm tính
+                            </p>
+                            <p>
+                                {addPointToPrice(totalPrice)}đ
+                            </p>
+                        </div>
+                        <div className="pricing-info-item d-flex justify-content-between">
+                            <p>Giảm giá</p>
+                            <p>{finalDiscount(totalPrice, discount)}đ</p>
+                        </div>
+                        <div className="pricing-info-item d-flex justify-content-between">
+                            <p>Phí giao hàng</p>
+                            <p>Miễn phí</p>
+                        </div>
+                        <div className="pricing-info-item final-total-box position-relative d-flex justify-content-between">
+                            <p className='fw-bold'>Tổng</p>
+                            <p className='fw-bold'>
+                                {finalTotal(totalPrice, discount)}đ
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
