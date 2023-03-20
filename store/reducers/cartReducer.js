@@ -69,8 +69,8 @@ const handleDecrementQuantity = (state, action) => {
     let position = getProductPosition(productList, productVariantId);
 
     if (position != -1) {
-        let newQuantity = productList[position].quantity + 1;
-        if (newQuantity <= productList[position].inventory) {
+        let newQuantity = productList[position].quantity - 1;
+        if (newQuantity >= 1) {
             productList[position].quantity = newQuantity
             productList[position].totalValue = productList[position].price * productList[position].quantity
         }

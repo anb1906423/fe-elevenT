@@ -1,21 +1,56 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios'
 import Link from 'next/link'
 import Swal from "sweetalert2";
-import { FaUserAlt, FaShoppingCart, FaShoppingBag } from 'react-icons/fa'
 import { swalert } from '@/mixins/swal.mixin';
+import { FaUserAlt, FaShoppingBag } from 'react-icons/fa'
+import { FaAngleDown } from 'react-icons/fa'
 
 import Login from "./Login"
 import Register from './Register';
 import { customerLogOut } from '../store/actions/customerActions'
-import { menu } from 'data/data'
+import { backendAPI } from '@/config'
+
+let fakeCategoryList = [
+	{
+		category_id: 1,
+		title: "Áo Nam",
+		children: [
+			{ category_id: 3, title: "Áo T-Shirt" },
+			{ category_id: 4, title: "Áo Polo" },
+		]
+	},
+	{
+		category_id: 2,
+		title: "Quần Nam",
+		children: [
+			{ category_id: 5, title: "Quần Short" },
+			{ category_id: 6, title: "Quần Jeans" },
+		]
+	},
+];
 
 const Header = () => {
-	const isLoggedIn = useSelector(state => state.customer.isLoggedIn);
-	const [isClose, setIsClose] = useState(true)
+	const [categoryList, setCategoryList] = useState([]);
 	const [isLogInOpen, setIsLogInOpen] = useState(false);
 	const [isRegisterOpen, setIsRegisterOpen] = useState(false)
+	const [isClose, setIsClose] = useState(true)
+	const isLoggedIn = useSelector(state => state.customer.isLoggedIn);
 	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const handleGetCategory = async () => {
+			try {
+				let respond = await axios.get(backendAPI + '/api/category/list-all');
+				setCategoryList(respond.data)
+			} catch (error) {
+				console.log(error);
+				setCategoryList(fakeCategoryList);
+			}
+		}
+		handleGetCategory();
+	}, [])
 
 	const toClose = () => {
 		setIsLogInOpen(false)
@@ -54,28 +89,33 @@ const Header = () => {
 					</Link>
 				</div>
 				<ul className="menu p-2">
+					<li className="menu-item fw-bold text-uppercase position-relative">
+						<Link
+							href="/san-pham"
+							className="d-flex align-items-center"
+						>
+							Tất cả
+						</Link>
+					</li>
 					{
-						menu.map((item, index) => {
+						categoryList.map((categoryLevel1, index) => {
 							return (
 								<li
 									className="menu-item fw-bold text-uppercase position-relative"
 									key={index}>
-									<a
+									<Link
+										href="#"
 										className="d-flex align-items-center"
-										href={item.href}
 									>
-										{item.title}
-										<span>{item.icon}</span>
-									</a>
+										{categoryLevel1.title}
+										<span><FaAngleDown /></span>
+									</Link>
 									<ul className='sub-menu position-absolute'>
 										{
-											item.list && item.list.map((listItem, i) => {
+											categoryLevel1.children && categoryLevel1.children.map((category, index) => {
 												return (
-													<li key={i} className='w-100'>
-														<a
-															href={listItem.href}>
-															{listItem.title}
-														</a>
+													<li key={index} className='w-100'>
+														<Link href="#">{category.title}</Link>
 													</li>
 												)
 											})
@@ -88,17 +128,6 @@ const Header = () => {
 				</ul>
 
 				<ul className="header-inner p-2 ms-auto">
-					{/* {
-						taiKhoan.map((item, index) => {
-							return (
-								<li onClick={item.function} className="inner-item menu-item fw-bold text-uppercase" key={index}>
-									<a href={item.href}>
-										{item.title}
-									</a>
-								</li>
-							)
-						})
-					} */}
 					{
 						!isLoggedIn ?
 							<li onClick={() => {
@@ -110,7 +139,7 @@ const Header = () => {
 							:
 							<>
 								<li className="inner-item menu-item fw-bold text-uppercase">
-									<a href='/account/infor'>Account</a>
+									<Link href="/account/infor">Account</Link>
 								</li>
 								<li onClick={() => {
 									swalert
@@ -133,7 +162,7 @@ const Header = () => {
 							</>
 					}
 					<li className="inner-item menu-item fw-bold text-uppercase">
-						<a href='/cart'><FaShoppingBag /></a>
+						<Link href="/cart"><FaShoppingBag /></Link>
 					</li>
 				</ul>
 			</div>

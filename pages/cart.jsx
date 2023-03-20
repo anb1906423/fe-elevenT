@@ -1,45 +1,68 @@
 import React, { useState, useEffect, useRef } from 'react'
-import Input from '@/components/Input'
 import { useSelector, useDispatch } from 'react-redux'
-import CartItem from '@/components/CartItem'
-import { FaShippingFast } from 'react-icons/fa'
+import { swtoast } from '@/mixins/swal.mixin'
 import { Radio } from 'antd';
+import { FaShippingFast } from 'react-icons/fa'
+
+import CartItem from '@/components/CartItem'
+import Input from '@/components/Input'
+import { backendAPI } from '@/config'
+import axios from 'axios';
 
 const Cart = () => {
-    const [productList, setProductList] = useState([])
-    const customerInfo = useSelector((state) => state.customer.customerInfo)
-    const cart = useSelector((state) => state.cart.productList)
+    const [customerId, setCustomerId] = useState('')
     const [customerName, setCustomerName] = useState('')
-    const [phoneNumber, setPhoneNumber] = useState('')
     const [email, setEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
     const [address, setAddress] = useState('')
-
-    const [discount, setDiscount] = useState(0)
+    const [deliveryCharges, setDeliveryCharges] = useState(20000)
+    const customerInfo = useSelector((state) => state.customer.customerInfo)
+    const isLoggedIn = useSelector(state => state.customer.isLoggedIn)
+    const productList = useSelector((state) => state.cart.productList)
 
     const [error, setError] = useState('')
+    const totalPrice = productList.reduce((accumulator, product) => accumulator + product.totalValue, 0)
 
-    const [feeShip, setFeeShip] = useState(cart.length > 0 ? 20000 : 0)
-
-    const totalPrice = cart.reduce((accumulator, product) => accumulator + product.price, 0)
+    useEffect(() => {
+        customerInfo != null ? setCustomerId(customerInfo.customer_id) : setCustomerId('')
+        customerInfo != null ? setEmail(customerInfo.email) : setEmail('')
+        customerInfo != null ? setCustomerName(customerInfo.customer_name) : setCustomerName('')
+        customerInfo != null ? setPhoneNumber(customerInfo.phone_number) : setPhoneNumber('')
+        customerInfo != null ? setAddress(customerInfo.address) : setAddress('')
+    }, [customerInfo])
 
     const addPointToPrice = (price) => {
         return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
-    const finalDiscount = (price, discount) => {
-        return price * discount / 100
+    const finalTotal = (price) => {
+        return price + deliveryCharges
     }
 
-    const finalTotal = (price, discount) => {
-        return (price * (100 - discount) / 100) + feeShip
+    const handleOrder = async () => {
+        if (isLoggedIn) {
+            try {
+                let orderItems = productList.map((product) => {
+                    return { product_variant_id: product.productVariantId, quantity: product.quantity }
+                })
+                let order = {
+                    user_id: customerId,
+                    customer_name: customerName,
+                    email,
+                    phone_number: phoneNumber,
+                    address,
+                    order_items: orderItems,
+                }
+                const respond = await axios.post(`${backendAPI}/api/order/create`, order)
+                console.log(respond.data)
+            } catch (err) {
+                console.log(err);
+                swtoast.error({
+                    text: "Có lỗi khi tạo đơn hàng vui lòng thử lại!"
+                });
+            }
+        }
     }
-
-    useEffect(() => {
-        setEmail(customerInfo.email)
-        setCustomerName(customerInfo.customer_name)
-        setPhoneNumber(customerInfo.phone_number)
-        console.log(cart);
-    }, [customerInfo])
 
     return (
         <div className="cart">
@@ -102,14 +125,13 @@ const Cart = () => {
                                     <FaShippingFast />
                                 </div>
                                 <div className="payment-item-name">
-                                    <p>
-                                        <p className="text-uppercase">cod</p>
-                                        <p className="">Thanh toán khi nhận hàng</p>
-                                    </p>
+                                    <p className="text-uppercase">cod</p>
+                                    <p className="">Thanh toán khi nhận hàng</p>
                                 </div>
                             </label>
                         </div>
                     </div>
+                    <button onClick={handleOrder}>Đặt Hàng</button>
                 </div>
                 <div className="col-5 cart-right-section">
                     <div className="title-div">
@@ -119,18 +141,18 @@ const Cart = () => {
                     </div>
                     <div className="cart-section">
                         {
-                            cart.length > 0 ?
-                                cart && cart.map((item, index) => {
+                            productList.length > 0 ?
+                                productList && productList.map((product, index) => {
                                     return (
                                         <CartItem
                                             key={index}
-                                            image={item.image}
-                                            quantity={item.quantity}
-                                            name={item.name}
-                                            colour={item.colour}
-                                            size={item.size}
-                                            productVariantId={item.productVariantId}
-                                            price={addPointToPrice(item.price)}
+                                            productVariantId={product.productVariantId}
+                                            name={product.name}
+                                            image={product.image}
+                                            colour={product.colour}
+                                            size={product.size}
+                                            quantity={product.quantity}
+                                            totalValue={addPointToPrice(product.totalValue)}
                                         />
 
                                     )
@@ -147,17 +169,13 @@ const Cart = () => {
                             </p>
                         </div>
                         <div className="pricing-info-item d-flex justify-content-between">
-                            <p>Giảm giá</p>
-                            <p>{finalDiscount(totalPrice, discount)}đ</p>
-                        </div>
-                        <div className="pricing-info-item d-flex justify-content-between">
                             <p>Phí giao hàng</p>
-                            <p>{feeShip == 0 ? "Miễn phí" : `${addPointToPrice(feeShip)}đ`}</p>
+                            <p>{addPointToPrice(deliveryCharges)}đ</p>
                         </div>
                         <div className="pricing-info-item final-total-box position-relative d-flex justify-content-between">
                             <p className='fw-bold'>Tổng</p>
                             <p className='fw-bold'>
-                                {addPointToPrice(finalTotal(totalPrice, discount))}đ
+                                {addPointToPrice(finalTotal(totalPrice))}đ
                             </p>
                         </div>
                     </div>

@@ -24,13 +24,13 @@ const Login = (props) => {
 			setEmailError("Địa chỉ email không được để trống!")
 			setPwdError('')
 			emailInputRef.current.focus()
-			return 
+			return
 		}
 		if (!password) {
 			setPwdError("Mật khẩu không được để trống!")
 			setEmailError('')
 			passwordInputRef.current.focus()
-			return 
+			return
 		}
 		try {
 			const respond = await axios.post(`${backendAPI}/api/customer/login`, {

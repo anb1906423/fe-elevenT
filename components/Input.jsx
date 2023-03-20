@@ -4,17 +4,18 @@ const InputStype = {
     borderRadius: "16px",
     padding: "5px 20px",
     margin: "9px 0",
-    border: '1px solid #d9d9',
+    border: '1px solid #333',
     height: "40px",
     transition: "all .2s linear",
 }
 
-const Input = ({ placeholder, type, value, onChange, error, disabled, inputRef }) => {
-  
+const Input = (props) => {
+    const { placeholder, type, value, onChange, error, disabled, inputRef } = props;
+
     return (
         <div className='input-component'>
             <input
-                className='w-100 border-info'
+                className='w-100'
                 placeholder={placeholder}
                 type={type}
                 value={value}
