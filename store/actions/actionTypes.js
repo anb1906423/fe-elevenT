@@ -12,6 +12,8 @@ const actionTypes = Object.freeze({
 
     REMOVE_ITEM: 'REMOVE_ITEM',
 
+    CLEAR_CART: 'CLEAR_CART',
+
     CLEAR_ERROR: 'CLEAR_ERROR'
 });
 

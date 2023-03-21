@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import axios from 'axios';
 import { swtoast } from '@/mixins/swal.mixin'
 import { Radio } from 'antd';
 import { FaShippingFast } from 'react-icons/fa'
@@ -7,7 +8,7 @@ import { FaShippingFast } from 'react-icons/fa'
 import CartItem from '@/components/CartItem'
 import Input from '@/components/Input'
 import { backendAPI } from '@/config'
-import axios from 'axios';
+import { clearCart } from '@/store/actions/cartActions'
 
 const Cart = () => {
     const [customerId, setCustomerId] = useState('')
@@ -19,6 +20,7 @@ const Cart = () => {
     const customerInfo = useSelector((state) => state.customer.customerInfo)
     const isLoggedIn = useSelector(state => state.customer.isLoggedIn)
     const productList = useSelector((state) => state.cart.productList)
+    const dispatch = useDispatch()
 
     const [error, setError] = useState('')
     const totalPrice = productList.reduce((accumulator, product) => accumulator + product.totalValue, 0)
@@ -40,7 +42,7 @@ const Cart = () => {
     }
 
     const handleOrder = async () => {
-        if (isLoggedIn) {
+        if (isLoggedIn && productList.length) {
             try {
                 let orderItems = productList.map((product) => {
                     return { product_variant_id: product.productVariantId, quantity: product.quantity }
@@ -54,7 +56,8 @@ const Cart = () => {
                     order_items: orderItems,
                 }
                 const respond = await axios.post(`${backendAPI}/api/order/create`, order)
-                console.log(respond.data)
+                dispatch(clearCart())
+                swtoast.success({ text: "Đặt hàng thành công" });
             } catch (err) {
                 console.log(err);
                 swtoast.error({

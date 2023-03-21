@@ -108,6 +108,12 @@ const cartReducer = (state = initialState, action) => {
         case actionTypes.REMOVE_ITEM:
             return handleRemoveItem(state, action)
 
+        case actionTypes.CLEAR_CART:
+            return {
+                ...state,
+                productList: []
+            };
+
         case actionTypes.CLEAR_ERROR:
             return {
                 ...state,

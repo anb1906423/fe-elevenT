@@ -4,12 +4,9 @@ import { frontendAPI } from '@/config'
 import Link from "next/link";
 
 const ProductItem = (props) => {
-    // const mergeId = (product_id, colour_id) = {
-    //     return product_id + colour_id
-    // }
     return (
         <div className='product-item'>
-            <Link href={{ pathname: `${frontendAPI}/san-pham/${props.product_id}`, query: { colour: props.colour_id } }}>
+            <Link href={{ pathname: `/product/${props.product_id}`, query: { colour: props.colour_id } }}>
                 <div className="position-relative img-box">
                     <img className='img' src={props.img} alt="" />
                     <div className="position-absolute rate-box">
@@ -41,13 +38,11 @@ const ProductItem = (props) => {
                 </div>
             </Link>
             <div className="infor-product">
-                <a href={props.id}>
+                <Link href={{ pathname: `/product/${props.product_id}`, query: { colour: props.colour_id } }}>
                     <h6>{props.name}</h6>
-                </a>
+                </Link>
                 <div className='d-flex justify-content-start'>
-                    <p className='price-after text-danger fw-bold'>{props.priceAfter}đ</p>
-                    {/* <s className='real-price fw-bold'>{props.realPrice}đ</s> */}
-                    {/* <p className='discount text-danger fw-bold'>{props.discount}%</p> */}
+                    <p className='price-after text-danger fw-bold'>{props.price}đ</p>
                 </div>
             </div>
         </div>

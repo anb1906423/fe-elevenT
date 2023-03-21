@@ -28,6 +28,12 @@ export const removeItem = (productVariantId) => {
     }
 }
 
+export const clearCart = () => {
+    return {
+        type: actionTypes.CLEAR_CART
+    }
+}
+
 export const clearError = () => {
     return {
         type: actionTypes.CLEAR_ERROR

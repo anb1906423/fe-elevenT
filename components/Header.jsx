@@ -91,7 +91,7 @@ const Header = () => {
 				<ul className="menu p-2">
 					<li className="menu-item fw-bold text-uppercase position-relative">
 						<Link
-							href="/san-pham"
+							href="/product"
 							className="d-flex align-items-center"
 						>
 							Tất cả
@@ -115,7 +115,7 @@ const Header = () => {
 											categoryLevel1.children && categoryLevel1.children.map((category, index) => {
 												return (
 													<li key={index} className='w-100'>
-														<Link href="#">{category.title}</Link>
+														<Link href="/product">{category.title}</Link>
 													</li>
 												)
 											})
