@@ -21,17 +21,54 @@ const AccountSidebar = () => {
             </div>
             <div className="sidebar-div">
                 <ul className="sidebar">
-                    {
-                        sidebar && sidebar.map((item, index) => {
-                            if (item.href == urlParts) {
+                    {sidebar &&
+                        sidebar.map((item, index) => {
+                            if (item.href === urlParts) {
                                 return (
-                                    <li key={index} onClick={() => item.onClick()} className='w-100'><Link style={sidebarItemFocus} className='d-block border-radius' href={item.href}>{item.text}</Link></li>
-                                )
-                            } else return (
-                                <li key={index} onClick={() => item.onClick()} className='w-100'><Link className='d-block border-radius' href={item.href}>{item.text}</Link></li>
-                            )
-                        })
-                    }
+                                    <li
+                                        key={index}
+                                        onClick={() => item.onClick()}
+                                        className="w-100"
+                                    >
+                                        <Link
+                                            style={sidebarItemFocus}
+                                            className="d-block border-radius"
+                                            href={item.href}
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    </li>
+                                );
+                            } else if (urlParts.includes("[id]") && item.href.includes('orders')) {
+                                return (
+                                    <li
+                                        key={index}
+                                        onClick={() => item.onClick()}
+                                        className="w-100"
+                                    >
+                                        <Link
+                                            style={sidebarItemFocus}
+                                            className="d-block border-radius"
+                                            href={item.href}
+                                        >
+                                            {item.text}
+                                        </Link>
+                                    </li>
+                                );
+                            } else {
+                                return (
+                                    <li
+                                        key={index}
+                                        onClick={() => item.onClick()}
+                                        className="w-100"
+                                    >
+                                        <Link className="d-block border-radius" href={item.href}>
+                                            {item.text}
+                                        </Link>
+                                    </li>
+                                );
+                            }
+                        })}
                 </ul>
             </div>
         </div>

@@ -1,13 +1,17 @@
 import React from 'react'
 import OrderItem from './OrderItem'
 import { addPointToPrice } from '@/Func';
+import Router from 'next/router';
+
+const linkToOrder = "/account/orders"
 
 // Order
 const Order = (props) => {
     const { id, items, totalPrice, status, date } = props;
+    // const router = Router()
 
     return (
-        <div className='order-component border-radius'>
+        <div className='order-component border-radius' onClick={() => Router.push(linkToOrder + `/${id}`)}>
             <div className="order-component-header border-radius d-flex align-items-center justify-content-between">
                 <div>
                     <p className='fw-bold'>{id}</p>

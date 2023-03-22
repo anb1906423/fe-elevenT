@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import AccountSidebar from '@/components/AccountSidebar'
 import Order from '@/components/order/Order'
 
-const ordersData = [
+export const ordersData = [
     {
         "order_id": "001",
         "customer_name": "John Smith",
@@ -70,7 +70,10 @@ const orders = () => {
                 <div className="orders-tab">
                     <div className="title-div">
                         <h3 className="title">
-                            Đơn hàng của bạn
+                            {
+                                orders.length == 0 ? "Đơn hàng của bạn" : `Đơn hàng của bạn: ${orders.length} đơn hàng`
+                            }
+                            
                         </h3>
                     </div>
                     <div className="orders-body">

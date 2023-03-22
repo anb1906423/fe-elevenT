@@ -1,0 +1,31 @@
+.order-detail {
+    .order-id-box {
+        max-width: 50%;
+        border : 1px solid #000;
+        padding: 12px 16px;
+        // margin: 0 auto;
+        flex: 1;
+
+        .order-id {
+            font-size: 12px;
+        }
+        .confirmed-box {
+            background-color: yellow;
+            border-radius: 6px;
+            padding: 2px 8px;
+            margin: 0 4px;
+            .confirmed-text {
+                font-size: 10px;
+            }
+        }
+    }
+
+    .order-date {
+        margin-left: auto;
+        font-size: 13px;
+    }
+
+    p {
+        margin: 0;
+    }
+}
