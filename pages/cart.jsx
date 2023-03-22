@@ -4,6 +4,7 @@ import axios from 'axios';
 import { swtoast } from '@/mixins/swal.mixin'
 import { Radio } from 'antd';
 import { FaShippingFast } from 'react-icons/fa'
+import { addPointToPrice } from '@/Func';
 
 import CartItem from '@/components/CartItem'
 import Input from '@/components/Input'
@@ -32,10 +33,6 @@ const Cart = () => {
         customerInfo != null ? setPhoneNumber(customerInfo.phone_number) : setPhoneNumber('')
         customerInfo != null ? setAddress(customerInfo.address) : setAddress('')
     }, [customerInfo])
-
-    const addPointToPrice = (price) => {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-    }
 
     const finalTotal = (price) => {
         return price + deliveryCharges

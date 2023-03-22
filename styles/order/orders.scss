@@ -1,0 +1,72 @@
+// orderItem (each product in order)
+.order-item {
+    margin: 10px 16px;
+    .box-img {
+        img {
+            max-width: 100%;
+            height   : auto;
+        }
+    }
+
+    .cart-item-info {
+        padding-right: 16px;
+    }
+
+    &:last-child {
+        border-radius: 0 0 16px 16px;
+        // background-color: #000;
+      }
+
+    &:not(:last-of-type) {
+        border-bottom: 1px solid #ccc;
+    }
+    .other-info {
+        p {
+            color: #1976D2;
+            font-weight: 700;
+        }
+    }
+    .rating-product-btn {
+        background-color: #000;
+        color: #fff;
+        padding: 4px 22px;
+        cursor: pointer;
+        &:hover {
+            opacity: .8;
+        }
+    }
+}
+
+// Order
+.order-component {
+    border: 1px solid #ccc;
+    overflow: hidden;
+    margin: 16px 0;
+    .order-component-header {
+        padding: 12px 16px;
+        background-color: #1976D2;
+        color: #fff;
+
+        .order-status {
+            background-color: #fff;
+            color: #1976D2;
+            padding: 0 10px;
+            border-radius: 8px;
+        }
+    }
+
+    .order-component-footer {
+        padding: 6px 16px;
+        background-color: #ccc;
+        border-radius: 0 0 16px 16px;
+        // margin-top: -14px;
+    }
+}
+
+// orders (order page)
+.account-orders {
+    font-size: 12px;
+    p {
+        margin: 0;
+    }
+}
