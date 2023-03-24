@@ -22,7 +22,7 @@
     }
     .other-info {
         p {
-            color: #1976D2;
+            color: var(--order-table-color);
             font-weight: 700;
         }
     }
@@ -44,12 +44,12 @@
     cursor: pointer;
     .order-component-header {
         padding: 6px 16px;
-        background-color: #1976D2;
+        background-color: var(--order-table-color);
         color: #fff;
 
         .order-status {
             background-color: #fff;
-            color: #1976D2;
+            color: var(--order-table-color);
             padding: 0 10px;
             border-radius: 8px;
         }
