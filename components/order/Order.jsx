@@ -1,43 +1,41 @@
 import React from 'react'
-import OrderItem from './OrderItem'
-import { addPointToPrice } from '@/Func';
 import Router from 'next/router';
 
+import OrderItem from './OrderItem'
+import { formatPrice, formatDate } from '@/helpers/format';
 const linkToOrder = "/account/orders"
 
-// Order
 const Order = (props) => {
-    const { id, items, totalPrice, status, date } = props;
-    // const router = Router()
+    const { id, orderItems, totalOrderValue, stateId, stateName, createdAt } = props;
 
     return (
         <div className='order-component border-radius' onClick={() => Router.push(linkToOrder + `/${id}`)}>
             <div className="order-component-header border-radius d-flex align-items-center justify-content-between">
                 <div>
-                    <p className='fw-bold'>{id}</p>
-                    <p>{date}</p>
+                    <p className='fw-bold'>#{id}</p>
+                    <p>{formatDate(createdAt)}</p>
                 </div>
                 <div className='order-status'>
-                    <p className='fw-bold'>{status}</p>
+                    <p className='fw-bold'>{stateName}</p>
                 </div>
             </div>
             <div className="order-component-body">
-                {items.map((item, index) => (
+                {orderItems && orderItems.map((orderItem, index) => (
                     <OrderItem
                         key={index}
-                        name={item.name}
-                        price={item.price}
-                        quantity={item.quantity}
-                        total={item.total}
-                        img={item.img}
-                        colour={item.colour}
-                        size={item.size}
+                        productVariantId={orderItem.product_variant_id}
+                        name={orderItem.name}
+                        image={orderItem.image}
+                        quantity={orderItem.quantity}
+                        colour={orderItem.colour}
+                        size={orderItem.size}
+                        price={orderItem.price}
                     />
                 ))}
             </div>
             <div className="order-component-footer d-flex align-items-center justify-content-end">
 
-                <p>Tổng đơn hàng: <strong>{addPointToPrice(totalPrice)}đ</strong></p>
+                <p>Tổng đơn hàng: <strong>{formatPrice(totalOrderValue)}đ</strong></p>
 
             </div>
         </div>

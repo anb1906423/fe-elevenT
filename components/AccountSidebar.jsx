@@ -1,9 +1,13 @@
-import React from 'react'
-import { sidebar } from '@/data/AccountInforData'
-import Link from 'next/link'
+import React, { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
+
+import { sidebar } from '@/data/AccountInforData'
 
 const AccountSidebar = () => {
+    const [customerName, setCustomerName] = useState('')
+    const customerInfo = useSelector((state) => state.customer.customerInfo)
     const router = useRouter()
     const urlParts = router.pathname;
 
@@ -12,11 +16,15 @@ const AccountSidebar = () => {
         color: "#fff",
     }
 
+    useEffect(() => {
+        customerInfo != null ? setCustomerName(customerInfo.customer_name) : setCustomerName('')
+    }, [customerInfo])
+
     return (
         <div className="account-sidebar">
             <div className="title-div">
                 <h3 className="title">
-                    Fullname {/* Lấy tên user từ store */}
+                    {customerName}
                 </h3>
             </div>
             <div className="sidebar-div">
