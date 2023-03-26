@@ -69,7 +69,7 @@ const ProductDetail = () => {
 				setSelectedColorIndex(0);
 			}
 		}
-		if (product_id !== undefined) {
+		if (product_id) {
 			handleGetProduct();
 		}
 	}, [product_id])
@@ -114,7 +114,7 @@ const ProductDetail = () => {
 		if (selectedColorIndex !== null && selectedSizeIndex !== null) {
 			handleGetProductVariant();
 		}
-	}, [selectedColorIndex, selectedSizeIndex]);
+	}, [selectedSizeIndex]);
 
 	useEffect(() => {
 		if (isErrorInCart) {
@@ -173,7 +173,7 @@ const ProductDetail = () => {
 										<OptionButton
 											getContent={() => {
 												setSelectedColorIndex(index)
-												router.push(`http://localhost:3000/san-pham/${product_id}?colour=${colour.colour_id}`)
+												router.push(`/product/${product_id}?colour=${colour.colour_id}`)
 											}}
 											content={colour.colour_name}
 											key={index}

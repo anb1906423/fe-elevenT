@@ -1,12 +1,9 @@
 import React from 'react'
-import { addPointToPrice } from '@/Func'
+import { formatPrice } from '@/helpers/format';
 
 const OrderDetailTable = (props) => {
 
-    // Hiện tại kêt quả chưa đúng
-    const finalTotal = (price, delivery_charges) => {
-        return price + delivery_charges
-    }
+    const { orderItems, totalProductValue, deliveryCharges, totalOrderValue } = props;
 
     return (
         <div className="order-detail-table">
@@ -22,14 +19,14 @@ const OrderDetailTable = (props) => {
                 </thead>
                 <tbody>
                     {
-                        props.items && props.items.map((item, index) => {
+                        orderItems && orderItems.map((orderItem, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{item.name}</td>
-                                    <td>{item.quantity}</td>
-                                    <td>{addPointToPrice(item.price)}</td>
-                                    <td>{`${item.colour} / ${item.size}`}</td>
-                                    <td>{addPointToPrice(item.price)}</td>
+                                    <td>{orderItem.name}</td>
+                                    <td>{orderItem.quantity}</td>
+                                    <td>{formatPrice(orderItem.price)}</td>
+                                    <td>{`${orderItem.colour} / ${orderItem.size}`}</td>
+                                    <td>{formatPrice(orderItem.total_value)}</td>
                                 </tr>
                             )
                         })
@@ -41,19 +38,15 @@ const OrderDetailTable = (props) => {
                     </tr>
                     <tr className=''>
                         <td colSpan="4" className=''>Tổng giá trị sản phẩm</td>
-                        <td colSpan="1" className=''>{props.total}</td>
+                        <td colSpan="1" className=''>{formatPrice(totalProductValue)}</td>
                     </tr>
                     <tr className=''>
                         <td colSpan="4" className=''>Phí giao hàng</td>
-                        <td colSpan="1" className=''>
-                            {
-                                props.delivery_charges == "0" ? "Miễn phí" : `${addPointToPrice(props.delivery_charges)}đ`
-                            }
-                        </td>
+                        <td colSpan="1" className=''>{formatPrice(deliveryCharges)}</td>
                     </tr>
                     <tr className='fw-bold'>
                         <td colSpan="4" className=''>Tổng thanh toán</td>
-                        <td colSpan="1" className=''>{`${addPointToPrice(finalTotal(props.total, props.delivery_charges))}đ`}</td>
+                        <td colSpan="1" className=''>{formatPrice(totalOrderValue)}</td>
                     </tr>
                 </tfoot>
             </table>

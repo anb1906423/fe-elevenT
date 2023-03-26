@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 import axios from 'axios';
 
 import AccountSidebar from '@/components/AccountSidebar'
@@ -81,15 +82,17 @@ const orders = () => {
                             orderList.map((order, index) => {
                                 return (
                                     <div key={index}>
-                                        <Order
-                                            key={index}
-                                            id={order.order_id}
-                                            stateId={order.state_id}
-                                            stateName={order.state_name}
-                                            orderItems={order.order_items}
-                                            totalOrderValue={order.total_order_value}
-                                            createdAt={order.created_at}
-                                        />
+                                        <Link href={`/get-order/${order.order_id}`}>
+                                            <Order
+                                                key={index}
+                                                id={order.order_id}
+                                                stateId={order.state_id}
+                                                stateName={order.state_name}
+                                                orderItems={order.order_items}
+                                                totalOrderValue={order.total_order_value}
+                                                createdAt={order.created_at}
+                                            />
+                                        </Link>
                                     </div>
                                 )
                             })

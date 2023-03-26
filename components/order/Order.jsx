@@ -9,7 +9,7 @@ const Order = (props) => {
     const { id, orderItems, totalOrderValue, stateId, stateName, createdAt } = props;
 
     return (
-        <div className='order-component border-radius' onClick={() => Router.push(linkToOrder + `/${id}`)}>
+        <div className='order-component border-radius'>
             <div className="order-component-header border-radius d-flex align-items-center justify-content-between">
                 <div>
                     <p className='fw-bold'>#{id}</p>
