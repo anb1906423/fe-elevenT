@@ -3,7 +3,13 @@ import React from 'react'
 import { formatPrice } from '@/helpers/format';
 // Each product in order
 const OrderItem = (props) => {
-    const { productVariantId, name, image, quantity, colour, size, price } = props;
+    const { productVariantId, name, image, quantity, colour, size, price, setIsFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
+
+    const showFeedbackModal = (e) => {
+        e.preventDefault();
+        setProductVariantIdForFeedBack(productVariantId)
+        setIsFeedbackModalOpen(true);
+    };
 
     return (
         <div className='order-item'>
@@ -33,7 +39,7 @@ const OrderItem = (props) => {
                         </div>
                     </div>
                     <div>
-                        <div onClick={props.showModal} className="rating-product-btn border-radius">
+                        <div onClick={showFeedbackModal} className="rating-product-btn border-radius">
                             <p>Đánh giá sản phẩm</p>
                         </div>
                     </div>

@@ -6,7 +6,7 @@ import { formatPrice, formatDate } from '@/helpers/format';
 const linkToOrder = "/account/orders"
 
 const Order = (props) => {
-    const { id, orderItems, totalOrderValue, stateId, stateName, createdAt } = props;
+    const { id, orderItems, totalOrderValue, stateId, stateName, createdAt, setIsFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
 
     return (
         <div className='order-component border-radius'>
@@ -30,7 +30,8 @@ const Order = (props) => {
                         colour={orderItem.colour}
                         size={orderItem.size}
                         price={orderItem.price}
-                        showModal={props.showModal}
+                        setIsFeedbackModalOpen={setIsFeedbackModalOpen}
+                        setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
                     />
                 ))}
             </div>

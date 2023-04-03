@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import axios from 'axios';
-import ModalRating from '@/components/order/ModalRating';
+import FeedbackModal from '@/components/order/FeedbackModal';
 
 import AccountSidebar from '@/components/AccountSidebar'
 import Order from '@/components/order/Order'
@@ -56,26 +56,15 @@ const orders = () => {
                 setOrderList(result.data)
             } catch (err) {
                 console.log(err)
+                setOrderList(fakeOrderList)
             }
         }
         if (customerId) getOrderList()
     }, [customerId]);
 
     // Modal
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const showModal = (e) => {
-        e.preventDefault();
-        setIsModalOpen(true);
-
-    };
-    const handleOk = (e) => {
-        e.preventDefault();
-        setIsModalOpen(false);
-    };
-    const handleCancel = (e) => {
-        e.preventDefault();
-        setIsModalOpen(false);
-    };
+    const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+    const [productVariantIdForFeedBack, setProductVariantIdForFeedBack] = useState(null);
 
     return (
         <div className='account-orders row'>
@@ -108,13 +97,15 @@ const orders = () => {
                                                 orderItems={order.order_items}
                                                 totalOrderValue={order.total_order_value}
                                                 createdAt={order.created_at}
-                                                showModal={showModal}
+                                                setIsFeedbackModalOpen={setIsFeedbackModalOpen}
+                                                setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
                                             />
                                         </Link>
-                                        <ModalRating
-                                            isModalOpen={isModalOpen}
-                                            handleCancel={handleCancel}
-                                            handleOk={handleOk}
+                                        <FeedbackModal
+                                            isOpen={isFeedbackModalOpen}
+                                            setIsOpen={setIsFeedbackModalOpen}
+                                            productVariantId={productVariantIdForFeedBack}
+                                            setProductVariantId={setProductVariantIdForFeedBack}
                                         />
                                     </div>
                                 )

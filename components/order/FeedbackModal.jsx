@@ -2,16 +2,29 @@ import React, { useState } from 'react'
 import { Modal, Rate, Input } from 'antd'
 const { TextArea } = Input
 
-const ModalRating = (props) => {
+const FeedbackModal = (props) => {
+    const { isOpen, setIsOpen, productVariantId, setProductVariantId } = props
     const [rate, setRate] = useState(0)
     const [content, setContent] = useState('')
+
+    const handleOk = (e) => {
+        e.preventDefault();
+        setProductVariantId(null)
+        setIsOpen(false);
+    };
+
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setProductVariantId(null)
+        setIsOpen(false)
+    };
 
     return (
         <Modal
             className='modal-rating'
-            open={props.isModalOpen}
-            onOk={props.handleOk}
-            onCancel={props.handleCancel}
+            open={isOpen}
+            onOk={handleOk}
+            onCancel={handleCancel}
         >
             <div className="modal-head">
                 <h5 className="text-center">Đánh giá của bạn</h5>
@@ -52,4 +65,4 @@ const ModalRating = (props) => {
     )
 }
 
-export default ModalRating
+export default FeedbackModal
