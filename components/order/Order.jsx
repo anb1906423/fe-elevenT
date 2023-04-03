@@ -30,6 +30,7 @@ const Order = (props) => {
                         colour={orderItem.colour}
                         size={orderItem.size}
                         price={orderItem.price}
+                        showModal={props.showModal}
                     />
                 ))}
             </div>

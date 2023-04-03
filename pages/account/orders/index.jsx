@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import axios from 'axios';
+import ModalRating from '@/components/order/ModalRating';
 
 import AccountSidebar from '@/components/AccountSidebar'
 import Order from '@/components/order/Order'
@@ -60,6 +61,22 @@ const orders = () => {
         if (customerId) getOrderList()
     }, [customerId]);
 
+    // Modal
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const showModal = (e) => {
+        e.preventDefault();
+        setIsModalOpen(true);
+
+    };
+    const handleOk = (e) => {
+        e.preventDefault();
+        setIsModalOpen(false);
+    };
+    const handleCancel = (e) => {
+        e.preventDefault();
+        setIsModalOpen(false);
+    };
+
     return (
         <div className='account-orders row'>
             <div className="col-4">
@@ -91,8 +108,14 @@ const orders = () => {
                                                 orderItems={order.order_items}
                                                 totalOrderValue={order.total_order_value}
                                                 createdAt={order.created_at}
+                                                showModal={showModal}
                                             />
                                         </Link>
+                                        <ModalRating
+                                            isModalOpen={isModalOpen}
+                                            handleCancel={handleCancel}
+                                            handleOk={handleOk}
+                                        />
                                     </div>
                                 )
                             })

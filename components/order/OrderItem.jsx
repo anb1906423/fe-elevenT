@@ -4,6 +4,7 @@ import { formatPrice } from '@/helpers/format';
 // Each product in order
 const OrderItem = (props) => {
     const { productVariantId, name, image, quantity, colour, size, price } = props;
+
     return (
         <div className='order-item'>
             <div className="row">
@@ -32,7 +33,7 @@ const OrderItem = (props) => {
                         </div>
                     </div>
                     <div>
-                        <div className="rating-product-btn border-radius">
+                        <div onClick={props.showModal} className="rating-product-btn border-radius">
                             <p>Đánh giá sản phẩm</p>
                         </div>
                     </div>
