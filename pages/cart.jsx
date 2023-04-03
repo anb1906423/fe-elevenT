@@ -4,11 +4,11 @@ import axios from 'axios';
 import { swtoast } from '@/mixins/swal.mixin'
 import { Radio } from 'antd';
 import { FaShippingFast } from 'react-icons/fa'
-import { addPointToPrice } from '@/Func';
 
 import CartItem from '@/components/CartItem'
 import Input from '@/components/Input'
 import { backendAPI } from '@/config'
+import { formatPrice } from '@/helpers/format'
 import { clearCart } from '@/store/actions/cartActions'
 
 const Cart = () => {
@@ -152,7 +152,7 @@ const Cart = () => {
                                             colour={product.colour}
                                             size={product.size}
                                             quantity={product.quantity}
-                                            totalValue={addPointToPrice(product.totalValue)}
+                                            totalValue={formatPrice(product.totalValue)}
                                         />
 
                                     )
@@ -165,17 +165,17 @@ const Cart = () => {
                                 Tạm tính
                             </p>
                             <p>
-                                {addPointToPrice(totalPrice)}đ
+                                {formatPrice(totalPrice)}đ
                             </p>
                         </div>
                         <div className="pricing-info-item d-flex justify-content-between">
                             <p>Phí giao hàng</p>
-                            <p>{addPointToPrice(deliveryCharges)}đ</p>
+                            <p>{formatPrice(deliveryCharges)}đ</p>
                         </div>
                         <div className="pricing-info-item final-total-box position-relative d-flex justify-content-between">
                             <p className='fw-bold'>Tổng</p>
                             <p className='fw-bold'>
-                                {addPointToPrice(finalTotal(totalPrice))}đ
+                                {formatPrice(finalTotal(totalPrice))}đ
                             </p>
                         </div>
                     </div>
