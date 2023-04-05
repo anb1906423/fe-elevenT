@@ -1,6 +1,8 @@
 // orderItem (each product in order)
 .order-item {
-    margin: 10px 16px;
+    margin-top: 10px;
+    padding: 0px 16px 12px;
+
     .box-img {
         img {
             max-width: 100%;
@@ -13,23 +15,26 @@
     }
 
     &:last-child {
-        border-radius: 0 0 16px 16px;
+        border-radius      : 0 0 16px 16px;
         // background-color: #000;
-      }
+    }
 
     &:not(:last-of-type) {
         border-bottom: 1px solid #ccc;
     }
+
     .other-info {
         p {
-            color: var(--order-table-color);
+            color      : var(--order-table-color);
             font-weight: 700;
         }
     }
+
     .rating-product-btn {
         background-color: #000;
-        color: #fff;
-        padding: 4px 22px;
+        color           : #fff;
+        padding         : 4px 22px;
+
         &:hover {
             opacity: .8;
         }
@@ -38,35 +43,56 @@
 
 // Order
 .order-component {
-    border: 1px solid #ccc;
+    border  : 1px solid #ccc;
     overflow: hidden;
-    margin: 16px 0;
-    cursor: pointer;
+    margin  : 16px 0;
+    cursor  : pointer;
+
     .order-component-header {
-        padding: 6px 16px;
+        padding         : 6px 16px;
         background-color: var(--order-table-color);
-        color: #fff;
+        color           : #fff;
 
         .order-status {
             background-color: #fff;
-            color: var(--order-table-color);
-            padding: 0 10px;
-            border-radius: 8px;
+            color           : var(--order-table-color);
+            padding         : 0 10px;
+            border-radius   : 8px;
         }
     }
 
     .order-component-footer {
-        padding: 6px 16px;
+        padding         : 6px 16px;
         background-color: #ccc;
-        border-radius: 0 0 16px 16px;
-        // margin-top: -14px;
+        border-radius   : 0 0 16px 16px;
+        color: #000;
     }
 }
 
 // orders (order page)
 .account-orders {
     font-size: 12px;
+
     p {
         margin: 0;
+    }
+
+    .orders-body {
+        a {
+            text-decoration: none;
+        }
+
+        .cart-item-info {
+
+            .text-blue {
+                color: var(--order-table-color);
+            }
+
+            a,
+            p,
+            div {
+                color          : #000;
+            }
+        }
     }
 }

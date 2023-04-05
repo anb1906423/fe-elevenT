@@ -7,12 +7,6 @@ const FeedbackModal = (props) => {
     const [rate, setRate] = useState(0)
     const [content, setContent] = useState('')
 
-    const handleOk = (e) => {
-        e.preventDefault();
-        setProductVariantId(null)
-        setIsOpen(false);
-    };
-
     const handleCancel = (e) => {
         e.preventDefault();
         setProductVariantId(null)
@@ -23,7 +17,7 @@ const FeedbackModal = (props) => {
         <Modal
             className='modal-rating'
             open={isOpen}
-            onOk={handleOk}
+            footer={null}
             onCancel={handleCancel}
         >
             <div className="modal-head">

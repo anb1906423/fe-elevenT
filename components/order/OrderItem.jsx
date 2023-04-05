@@ -30,7 +30,7 @@ const OrderItem = (props) => {
                             <div className=" product-quantity">
                                 ×{quantity}
                             </div>
-                            <p>{`${colour} / ${size}`}</p>
+                            <p className="text-blue">{`${colour} / ${size}`}</p>
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="price-box fw-bold">

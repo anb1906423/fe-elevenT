@@ -23,30 +23,30 @@ const OrderDetailTable = (props) => {
                             return (
                                 <tr key={index}>
                                     <td>{orderItem.name}</td>
-                                    <td>{orderItem.quantity}</td>
-                                    <td>{formatPrice(orderItem.price)}</td>
-                                    <td>{`${orderItem.colour} / ${orderItem.size}`}</td>
-                                    <td>{formatPrice(orderItem.total_value)}</td>
+                                    <td className='text-center'>{orderItem.quantity}</td>
+                                    <td className='text-center'>{formatPrice(orderItem.price)}</td>
+                                    <td className='text-center'>{`${orderItem.colour} / ${orderItem.size}`}</td>
+                                    <td className='text-center'>{formatPrice(orderItem.total_value)}</td>
                                 </tr>
                             )
                         })
                     }
                 </tbody>
-                <tfoot>
+                <tfoot className=''>
                     <tr>
                         <td colSpan="5">Mã giảm giá</td>
                     </tr>
                     <tr className=''>
                         <td colSpan="4" className=''>Tổng giá trị sản phẩm</td>
-                        <td colSpan="1" className=''>{formatPrice(totalProductValue)}</td>
+                        <td colSpan="1" className='text-center'>{formatPrice(totalProductValue)}</td>
                     </tr>
                     <tr className=''>
                         <td colSpan="4" className=''>Phí giao hàng</td>
-                        <td colSpan="1" className=''>{formatPrice(deliveryCharges)}</td>
+                        <td colSpan="1" className='text-center'>{formatPrice(deliveryCharges)}</td>
                     </tr>
                     <tr className='fw-bold'>
                         <td colSpan="4" className=''>Tổng thanh toán</td>
-                        <td colSpan="1" className=''>{formatPrice(totalOrderValue)}</td>
+                        <td colSpan="1" className='text-center'>{formatPrice(totalOrderValue)}</td>
                     </tr>
                 </tfoot>
             </table>

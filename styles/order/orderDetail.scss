@@ -38,6 +38,7 @@
             font-size  : 12px;
             margin-top : -12px;
             font-weight: 500;
+
             p {
                 padding: 4px 0;
             }
@@ -46,22 +47,41 @@
 
     // table
     table {
-        border         : 1px solid #000;
         margin-top     : 16px;
-        border-collapse: collapse;
-        border-radius  : 16px !important;
         font-size      : 12px;
+        border-radius  : 16px;
+        border-collapse: separate;
+        border-spacing : 0px;
         font-weight    : 500;
+        overflow       : hidden;
+        border         : 1px solid #000;
 
         thead {
+
             tr {
-                background-color: var(--order-table-color);
-                color           : #fff;
+                th {
+                    color           : #fff;
+                    background-color: var(--order-table-color);
+                }
             }
         }
 
         tr {
-            td {}
+            td {
+                padding: 10px;
+            }
         }
+
+        tfoot {
+            border       : 1px solid #000;
+            border-radius: 16px;
+
+            tr:last-child {
+                td {
+                    border-bottom: none;
+                }
+            }
+        }
+
     }
 }
