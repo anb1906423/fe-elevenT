@@ -6,7 +6,7 @@
     .box-img {
         img {
             max-width: 100%;
-            height   : auto;
+            height: auto;
         }
     }
 
@@ -15,8 +15,8 @@
     }
 
     &:last-child {
-        border-radius      : 0 0 16px 16px;
-        // background-color: #000;
+        border-radius: 0 0 16px 16px;
+        //background-color: #000;
     }
 
     &:not(:last-of-type) {
@@ -25,15 +25,15 @@
 
     .other-info {
         p {
-            color      : var(--order-table-color);
+            color: var(--order-table-color);
             font-weight: 700;
         }
     }
 
     .rating-product-btn {
         background-color: #000;
-        color           : #fff;
-        padding         : 4px 22px;
+        color: #fff;
+        padding: 4px 22px;
 
         &:hover {
             opacity: .8;
@@ -43,28 +43,28 @@
 
 // Order
 .order-component {
-    border  : 1px solid #ccc;
+    border: 1px solid #ccc;
     overflow: hidden;
-    margin  : 16px 0;
-    cursor  : pointer;
+    margin: 16px 0;
+    cursor: pointer;
 
     .order-component-header {
-        padding         : 6px 16px;
+        padding: 6px 16px;
         background-color: var(--order-table-color);
-        color           : #fff;
+        color: #fff;
 
         .order-status {
             background-color: #fff;
-            color           : var(--order-table-color);
-            padding         : 0 10px;
-            border-radius   : 8px;
+            color: var(--order-table-color);
+            padding: 0 10px;
+            border-radius: 8px;
         }
     }
 
     .order-component-footer {
-        padding         : 6px 16px;
+        padding: 6px 16px;
         background-color: #ccc;
-        border-radius   : 0 0 16px 16px;
+        border-radius: 0 0 16px 16px;
         color: #000;
     }
 }
@@ -91,7 +91,7 @@
             a,
             p,
             div {
-                color          : #000;
+                color: #000;
             }
         }
     }

@@ -1,17 +1,21 @@
-.modal-rating {
+.feedback-modal {
+
     .modal-head {
         margin: 8px 0;
     }
 
     .modal-body {
         margin: 12px 0;
+
         .rating-box {
             margin-left: 22px;
         }
+
         .content-box {
             margin: 2px 0;
         }
-        > div {
+
+        >div {
             margin: 4px 0;
         }
     }

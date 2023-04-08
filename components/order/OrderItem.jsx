@@ -1,15 +1,38 @@
 import React from 'react'
 
 import { formatPrice } from '@/helpers/format';
-// Each product in order
-const OrderItem = (props) => {
-    const { productVariantId, name, image, quantity, colour, size, price, setIsFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
 
-    const showFeedbackModal = (e) => {
+const OrderItem = (props) => {
+
+    const { productVariantId, name, image, quantity, colour, size, price, stateId, hasFeedback, setIsCreateFeedbackModalOpen, setIsUpdateFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
+
+    const showCreateFeedbackModal = (e) => {
         e.preventDefault();
         setProductVariantIdForFeedBack(productVariantId)
-        setIsFeedbackModalOpen(true);
+        setIsCreateFeedbackModalOpen(true);
     };
+
+    const showUpdateFeedbackModal = (e) => {
+        e.preventDefault();
+        setProductVariantIdForFeedBack(productVariantId)
+        setIsUpdateFeedbackModalOpen(true);
+    };
+
+    const renderFeedbackBtn = () => {
+        if (stateId == 4)
+            if (hasFeedback)
+                return (
+                    <div onClick={showUpdateFeedbackModal} className="rating-product-btn border-radius" >
+                        <p>Sửa đánh giá</p>
+                    </div >
+                )
+            else
+                return (
+                    <div onClick={showCreateFeedbackModal} className="rating-product-btn border-radius" >
+                        <p>Đánh giá sản phẩm</p>
+                    </div >
+                )
+    }
 
     return (
         <div className='order-item'>
@@ -39,9 +62,7 @@ const OrderItem = (props) => {
                         </div>
                     </div>
                     <div>
-                        <div onClick={showFeedbackModal} className="rating-product-btn border-radius">
-                            <p>Đánh giá sản phẩm</p>
-                        </div>
+                        {renderFeedbackBtn()}
                     </div>
                 </div>
             </div>

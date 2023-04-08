@@ -1,12 +1,10 @@
 import React from 'react'
-import Router from 'next/router';
 
 import OrderItem from './OrderItem'
 import { formatPrice, formatDate } from '@/helpers/format';
-const linkToOrder = "/account/orders"
 
 const Order = (props) => {
-    const { id, orderItems, totalOrderValue, stateId, stateName, createdAt, setIsFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
+    const { id, orderItems, totalOrderValue, stateId, stateName, createdAt, setIsCreateFeedbackModalOpen, setIsUpdateFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
 
     return (
         <div className='order-component border-radius'>
@@ -30,7 +28,10 @@ const Order = (props) => {
                         colour={orderItem.colour}
                         size={orderItem.size}
                         price={orderItem.price}
-                        setIsFeedbackModalOpen={setIsFeedbackModalOpen}
+                        stateId={stateId}
+                        hasFeedback={orderItem.has_feedback}
+                        setIsCreateFeedbackModalOpen={setIsCreateFeedbackModalOpen}
+                        setIsUpdateFeedbackModalOpen={setIsUpdateFeedbackModalOpen}
                         setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
                     />
                 ))}

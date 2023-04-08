@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import axios from 'axios';
-import FeedbackModal from '@/components/order/FeedbackModal';
+import CreateFeedbackModal from '@/components/order/CreateFeedbackModal';
+import UpdateFeedbackModal from '@/components/order/UpdateFeedbackModal';
 
 import AccountSidebar from '@/components/AccountSidebar'
 import Order from '@/components/order/Order'
@@ -38,7 +39,7 @@ export const fakeOrderList = [
     }
 ]
 
-const orders = () => {
+const OrderHistoryPage = () => {
     const [customerId, setCustomerId] = useState('')
     const [orderList, setOrderList] = useState([])
     const customerInfo = useSelector((state) => state.customer.customerInfo)
@@ -63,8 +64,21 @@ const orders = () => {
     }, [customerId]);
 
     // Modal
-    const [isFeedbackModalOpen, setIsFeedbackModalOpen] = useState(false);
+    const [isCreateFeedbackModalOpen, setIsCreateFeedbackModalOpen] = useState(false);
+    const [isUpdateFeedbackModalOpen, setIsUpdateFeedbackModalOpen] = useState(false);
     const [productVariantIdForFeedBack, setProductVariantIdForFeedBack] = useState(null);
+
+    const refreshOrderList = async () => {
+        if (customerId) {
+            try {
+                const result = await axios.get(`${backendAPI}/api/order/customer/list/${customerId}`)
+                setOrderList(result.data)
+            } catch (err) {
+                console.log(err)
+                setOrderList(fakeOrderList)
+            }
+        }
+    }
 
     return (
         <div className='account-orders row'>
@@ -97,25 +111,38 @@ const orders = () => {
                                                 orderItems={order.order_items}
                                                 totalOrderValue={order.total_order_value}
                                                 createdAt={order.created_at}
-                                                setIsFeedbackModalOpen={setIsFeedbackModalOpen}
+                                                setIsCreateFeedbackModalOpen={setIsCreateFeedbackModalOpen}
+                                                setIsUpdateFeedbackModalOpen={setIsUpdateFeedbackModalOpen}
                                                 setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
                                             />
                                         </Link>
-                                        <FeedbackModal
-                                            isOpen={isFeedbackModalOpen}
-                                            setIsOpen={setIsFeedbackModalOpen}
-                                            productVariantId={productVariantIdForFeedBack}
-                                            setProductVariantId={setProductVariantIdForFeedBack}
-                                        />
                                     </div>
                                 )
                             })
                         }
                     </div>
                 </div>
+                {isCreateFeedbackModalOpen &&
+                    <CreateFeedbackModal
+                        isOpen={isCreateFeedbackModalOpen}
+                        setIsOpen={setIsCreateFeedbackModalOpen}
+                        productVariantId={productVariantIdForFeedBack}
+                        setProductVariantId={setProductVariantIdForFeedBack}
+                        refreshOrderList={refreshOrderList}
+                    />
+                }
+                {isUpdateFeedbackModalOpen &&
+                    <UpdateFeedbackModal
+                        isOpen={isUpdateFeedbackModalOpen}
+                        setIsOpen={setIsUpdateFeedbackModalOpen}
+                        productVariantId={productVariantIdForFeedBack}
+                        setProductVariantId={setProductVariantIdForFeedBack}
+                        refreshOrderList={refreshOrderList}
+                    />
+                }
             </div>
         </div>
     )
 }
 
-export default orders
+export default OrderHistoryPage
