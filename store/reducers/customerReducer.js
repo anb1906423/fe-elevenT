@@ -2,7 +2,7 @@ import actionTypes from "../actions/actionTypes";
 
 const initialState = {
     isLoggedIn: false,
-    customerInfo: null
+    customerInfo: null,
 };
 
 const customerReducer = (state = initialState, action) => {

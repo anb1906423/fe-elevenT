@@ -12,13 +12,41 @@ import { backendAPI } from '@/config'
 export const fakeOrderList = [
     {
         "order_id": "71852912157786",
+        "state_id": 4,
+        "state_name": "Chờ Xác Nhận",
+        "order_items": [
+            {
+                "product_variant_id": 3,
+                "name": "Áo thun thể thao nam Active ProMax",
+                "image": "https://media.coolmate.me/cdn-cgi/image/quality=80/image/May2022/pro_s2_trang_ping.jpg",
+                "quantity": 2,
+                "colour": "Trắng",
+                "size": "L",
+                "price": 179000,
+                "has_feedback": true
+            },
+            {
+                "product_variant_id": 19,
+                "name": "Quần Jeans Clean Denim dáng Regular S3",
+                "image": "https://media.coolmate.me/cdn-cgi/image/quality=80/image/May2022/pro_s2_trang_ping.jpg",
+                "quantity": 1,
+                "colour": "Xanh Đậm",
+                "size": "29",
+                "price": 599000
+            }
+        ],
+        "total_order_value": 977000,
+        "created_at": "2023-03-16T03:22:48.000Z"
+    },
+    {
+        "order_id": "71852912157786",
         "state_id": 1,
         "state_name": "Chờ Xác Nhận",
         "order_items": [
             {
                 "product_variant_id": 3,
                 "name": "Áo thun thể thao nam Active ProMax",
-                "image": "http://localhost:8080\\static\\images\\b61668db-eea8-43d6-aa33-7582f0bb0c7e.jpg",
+                "image": "https://media.coolmate.me/cdn-cgi/image/quality=80/image/May2022/pro_s2_trang_ping.jpg",
                 "quantity": 2,
                 "colour": "Trắng",
                 "size": "L",
@@ -27,7 +55,7 @@ export const fakeOrderList = [
             {
                 "product_variant_id": 19,
                 "name": "Quần Jeans Clean Denim dáng Regular S3",
-                "image": "http://localhost:8080\\static\\images\\81a212a5-f49b-4ee8-a43b-b9e30f10f1c8.jpg",
+                "image": "https://media.coolmate.me/cdn-cgi/image/quality=80/image/May2022/pro_s2_trang_ping.jpg",
                 "quantity": 1,
                 "colour": "Xanh Đậm",
                 "size": "29",
@@ -40,7 +68,7 @@ export const fakeOrderList = [
 ]
 
 const OrderHistoryPage = () => {
-    const [customerId, setCustomerId] = useState('')
+    const [customerId, setCustomerId] = useState('abc')
     const [orderList, setOrderList] = useState([])
     const customerInfo = useSelector((state) => state.customer.customerInfo)
     const isLoggedIn = useSelector(state => state.customer.isLoggedIn)
@@ -81,19 +109,16 @@ const OrderHistoryPage = () => {
     }
 
     return (
-        <div className='account-orders row'>
+        <div className='order-history-page row'>
             <div className="col-4">
                 <AccountSidebar />
             </div>
             <div className="col-8">
                 <div className="orders-tab">
-                    <div className="title-div">
-                        <h3 className="title">
-                            {
-                                orderList.length == 0 ? "Đơn hàng của bạn" : `Đơn hàng của bạn: ${orderList.length} đơn hàng`
-                            }
-
-                        </h3>
+                    <div className="title">
+                        {
+                            orderList.length == 0 ? "Đơn hàng của bạn" : `Đơn hàng của bạn: ${orderList.length} đơn hàng`
+                        }
                     </div>
                     <div className="orders-body">
                         {orderList && orderList.length === 0 ?
@@ -101,22 +126,22 @@ const OrderHistoryPage = () => {
                             :
                             orderList.map((order, index) => {
                                 return (
-                                    <div key={index}>
-                                        <Link href={`/get-order/${order.order_id}`}>
-                                            <Order
-                                                key={index}
-                                                id={order.order_id}
-                                                stateId={order.state_id}
-                                                stateName={order.state_name}
-                                                orderItems={order.order_items}
-                                                totalOrderValue={order.total_order_value}
-                                                createdAt={order.created_at}
-                                                setIsCreateFeedbackModalOpen={setIsCreateFeedbackModalOpen}
-                                                setIsUpdateFeedbackModalOpen={setIsUpdateFeedbackModalOpen}
-                                                setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
-                                            />
-                                        </Link>
-                                    </div>
+                                    // <div key={index}>
+                                    //     <Link href={`/get-order/${order.order_id}`}>
+                                    <Order
+                                        key={index}
+                                        id={order.order_id}
+                                        stateId={order.state_id}
+                                        stateName={order.state_name}
+                                        orderItems={order.order_items}
+                                        totalOrderValue={order.total_order_value}
+                                        createdAt={order.created_at}
+                                        setIsCreateFeedbackModalOpen={setIsCreateFeedbackModalOpen}
+                                        setIsUpdateFeedbackModalOpen={setIsUpdateFeedbackModalOpen}
+                                        setProductVariantIdForFeedBack={setProductVariantIdForFeedBack}
+                                    />
+                                    //     </Link>
+                                    // </div>
                                 )
                             })
                         }

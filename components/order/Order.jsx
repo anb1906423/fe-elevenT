@@ -1,4 +1,5 @@
 import React from 'react'
+import Link from 'next/link'
 
 import OrderItem from './OrderItem'
 import { formatPrice, formatDate } from '@/helpers/format';
@@ -7,17 +8,18 @@ const Order = (props) => {
     const { id, orderItems, totalOrderValue, stateId, stateName, createdAt, setIsCreateFeedbackModalOpen, setIsUpdateFeedbackModalOpen, setProductVariantIdForFeedBack } = props;
 
     return (
-        <div className='order-component border-radius'>
-            <div className="order-component-header border-radius d-flex align-items-center justify-content-between">
+        <Link className='order border-radius' href={`/get-order/${id}`}>
+
+            <div className="order-header border-radius d-flex align-items-center justify-content-between">
                 <div>
-                    <p className='fw-bold'>#{id}</p>
-                    <p>{formatDate(createdAt)}</p>
+                    <p className='order-title fw-bold'>#{id}</p>
+                    <p className='order-date'>{formatDate(createdAt)}</p>
                 </div>
                 <div className='order-status'>
-                    <p className='fw-bold'>{stateName}</p>
+                    <span className='fw-bold'>{stateName}</span>
                 </div>
             </div>
-            <div className="order-component-body">
+            <div className="order-body">
                 {orderItems && orderItems.map((orderItem, index) => (
                     <OrderItem
                         key={index}
@@ -36,12 +38,10 @@ const Order = (props) => {
                     />
                 ))}
             </div>
-            <div className="order-component-footer d-flex align-items-center justify-content-end">
-
-                <p>Tổng đơn hàng: <strong>{formatPrice(totalOrderValue)}đ</strong></p>
-
+            <div className="order-footer d-flex align-items-center justify-content-end">
+                <div>Tổng đơn hàng: <strong>{formatPrice(totalOrderValue)}đ</strong></div>
             </div>
-        </div>
+        </Link>
     )
 }
 

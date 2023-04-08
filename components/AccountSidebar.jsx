@@ -11,73 +11,53 @@ const AccountSidebar = () => {
     const router = useRouter()
     const urlParts = router.pathname;
 
-    const sidebarItemFocus = {
-        backgroundColor: "#000",
-        color: "#fff",
-    }
-
     useEffect(() => {
         customerInfo != null ? setCustomerName(customerInfo.customer_name) : setCustomerName('')
     }, [customerInfo])
 
     return (
         <div className="account-sidebar">
-            <div className="title-div">
-                <h3 className="title">
-                    {customerName}
-                </h3>
+            <div className="title">
+                {customerName}
             </div>
-            <div className="sidebar-div">
-                <ul className="sidebar">
-                    {sidebar &&
-                        sidebar.map((item, index) => {
-                            if (item.href === urlParts) {
-                                return (
-                                    <li
-                                        key={index}
-                                        onClick={() => item.onClick()}
-                                        className="w-100"
-                                    >
-                                        <Link
-                                            style={sidebarItemFocus}
-                                            className="d-block border-radius"
-                                            href={item.href}
-                                        >
-                                            {item.text}
-                                        </Link>
-                                    </li>
-                                );
-                            } else if (urlParts.includes("[id]") && item.href.includes('orders')) {
-                                return (
-                                    <li
-                                        key={index}
-                                        onClick={() => item.onClick()}
-                                        className="w-100"
-                                    >
-                                        <Link
-                                            style={sidebarItemFocus}
-                                            className="d-block border-radius"
-                                            href={item.href}
-                                        >
-                                            {item.text}
-                                        </Link>
-                                    </li>
-                                );
-                            } else {
-                                return (
-                                    <li
-                                        key={index}
-                                        onClick={() => item.onClick()}
-                                        className="w-100"
-                                    >
-                                        <Link className="d-block border-radius" href={item.href}>
-                                            {item.text}
-                                        </Link>
-                                    </li>
-                                );
-                            }
-                        })}
-                </ul>
+            <div className="sidebar-items">
+                {sidebar &&
+                    sidebar.map((item, index) => {
+                        if (item.href === urlParts) {
+                            return (
+                                <Link
+                                    key={index}
+                                    className='sidebar-item d-block border-radius active'
+                                    href={item.href}
+                                    onClick={() => item.onClick()}
+                                >
+                                    {item.text}
+                                </Link>
+                                // </li>
+                            );
+                        } else if (urlParts.includes("[id]") && item.href.includes('orders')) {
+                            return (
+                                <Link
+                                    key={index}
+                                    className='sidebar-item d-block border-radius active'
+                                    href={item.href}
+                                    onClick={() => item.onClick()}
+                                >
+                                    {item.text}
+                                </Link>
+                            );
+                        } else {
+                            return (
+                                <Link
+                                    key={index}
+                                    className='sidebar-item d-block border-radius'
+                                    href={item.href}
+                                    onClick={() => item.onClick()}>
+                                    {item.text}
+                                </Link>
+                            );
+                        }
+                    })}
             </div>
         </div>
     )

@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux'
 import AccountSidebar from '@/components/AccountSidebar'
 import Input from '@/components/Input'
 
-const AccountInfor = () => {
+const CustomerInfoPage = () => {
 
     const [customerName, setCustomerName] = useState('')
     const [email, setEmail] = useState('')
@@ -22,18 +22,16 @@ const AccountInfor = () => {
 
     return (
         <div className="account-infor row">
-            <Head>
+            {/* <Head>
                 <title>Tài khoản của bạn</title>
-            </Head>
+            </Head> */}
             <div className="col-4">
                 <AccountSidebar />
             </div>
             <div className="col-8">
                 <div className="infor-tab">
-                    <div className="title-div">
-                        <h3 className="title">
-                            Thông tin tài khoản
-                        </h3>
+                    <div className="title">
+                        Thông tin tài khoản
                     </div>
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
                         <div className="col-3">Họ tên</div>
@@ -79,10 +77,13 @@ const AccountInfor = () => {
                             />
                         </div>
                     </div>
+                    <div className="infor-tab-item col-12 row d-flex align-items-center">
+                        <div className="col-3"><button className='update-account-btn border-radius'>Cập nhật tài khoản</button></div>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default AccountInfor
+export default CustomerInfoPage

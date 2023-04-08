@@ -10,9 +10,9 @@
 @import './components/PolicyItem.scss';
 @import './components/AccountSidebar.scss';
 @import './components/CartItem.scss';
-@import './order/orders.scss';
-@import './order/orderDetail.scss';
-@import './order/FeedbackModal.scss';
+@import './OrderHistoryPage/OrderHistoryPage.scss';
+@import './OrderHistoryPage/orderDetail.scss';
+@import './OrderHistoryPage/FeedbackModal.scss';
 
 * {
     margin: 0;
@@ -20,17 +20,14 @@
     box-sizing: border-box;
 }
 
-// .border-radius {
-//     border-radius: 6px;
-//     padding: 6px 12px;
-// }
-
-.border-radius {
-    border-radius: 16px;
-}
-
 html {
     font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
 }
 
 :root {
@@ -44,7 +41,11 @@ html {
     --height-input-on-search: 40px;
 }
 
+.border-radius {
+    border-radius: 16px;
+}
+
 .cont {
-    max-width: 1200px;
-    margin: 0 auto;
+    padding-left: 64px;
+    padding-right: 64px;
 }

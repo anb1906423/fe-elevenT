@@ -22,14 +22,14 @@ const OrderItem = (props) => {
         if (stateId == 4)
             if (hasFeedback)
                 return (
-                    <div onClick={showUpdateFeedbackModal} className="rating-product-btn border-radius" >
-                        <p>Sửa đánh giá</p>
+                    <div onClick={showUpdateFeedbackModal} className="feedback-btn border-radius" >
+                        <span>Sửa đánh giá</span>
                     </div >
                 )
             else
                 return (
-                    <div onClick={showCreateFeedbackModal} className="rating-product-btn border-radius" >
-                        <p>Đánh giá sản phẩm</p>
+                    <div onClick={showCreateFeedbackModal} className="feedback-btn border-radius" >
+                        <span>Đánh giá sản phẩm</span>
                     </div >
                 )
     }
@@ -43,17 +43,15 @@ const OrderItem = (props) => {
                     </div>
                 </div>
                 <div className="col-10 border-radius d-flex justify-content-between">
-                    <div className="cart-item-info position-relative">
-                        <div className="product-name">
-                            <p className="fw-bold">
-                                {name}
-                            </p>
+                    <div className="order-item-info position-relative">
+                        <div className="order-item-title">
+                            {name}
                         </div>
-                        <div className="other-info">
-                            <div className=" product-quantity">
-                                ×{quantity}
-                            </div>
-                            <p className="text-blue">{`${colour} / ${size}`}</p>
+                        <div className="order-item-quantity">
+                            ×{quantity}
+                        </div>
+                        <div className="order-item-variant-label">
+                            {`${colour} / ${size}`}
                         </div>
                         <div className="d-flex justify-content-between">
                             <div className="price-box fw-bold">

@@ -1,12 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 
 const InputStype = {
-    borderRadius: "16px",
-    padding: "5px 20px",
-    margin: "9px 0",
-    border: '1px solid #333',
     height: "40px",
-    transition: "all .2s linear",
+    margin: "9px 0",
+    padding: "5px 20px",
+    border: '1px solid #D9D9D9',
+    borderRadius: "16px",
+    fontSize: '14px',
+    lineHeight: 1.5,
+    fontWeight: 400
 }
 
 const Input = (props) => {
