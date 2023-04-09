@@ -1,0 +1,29 @@
+.feedback-item {
+    border-top: 1px solid #ccc;
+    height: 124px;
+    .line-feedback {
+        padding: 12px 0;
+        .feedback-user-name {
+            font-size: 12px;
+        }
+
+        .feedback-colour {
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-content {
+            font-size : 14px;
+            text-align: justify;
+        }
+
+        span {
+            font-size: 12px;
+            color: var(--order-table-color);
+        }
+
+        p {
+            margin: 0;
+        }
+    }
+}

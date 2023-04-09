@@ -12,7 +12,7 @@ import ProductQuantityInput from '@/components/ProductQuantityInput'
 import { backendAPI } from '@/config'
 import { policyList } from '@/data/PolicyData'
 import { addToCart, clearError } from '@/store/actions/cartActions'
-
+import FeedbackBox from '@/components/feedback/FeedbackBox';
 const fakeColourList = [{ colour_id: 1, colour_name: 'Trắng' }, { colour_id: 2, colour_name: 'Đen' }];
 const fakeSizeList = [{ size_id: 1, size_name: 'S' }, { size_id: 2, size_name: 'M' }, { size_id: 3, size_name: 'L' }];
 const fake_product_image = [
@@ -231,6 +231,12 @@ const ProductDetail = () => {
 				<div className="">
 					<h5 className='feedback_quantify-detail d-inline-block'>{feedbackQuantity} Đánh giá</h5>
 					<h5 className='rating-detail d-inline-block'>{rating} / 5 ⭐</h5>
+				</div>
+			</div>
+			<div className="feedback-wrapper">
+				<h6 style={{ marginBottom: "20px" }}>Đánh giá</h6>
+				<div>
+					<FeedbackBox />
 				</div>
 			</div>
 		</div >
