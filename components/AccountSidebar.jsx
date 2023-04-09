@@ -18,7 +18,7 @@ const AccountSidebar = () => {
     return (
         <div className="account-sidebar">
             <div className="title">
-                {customerName}
+                {customerName ? customerName : "Thông tin khách hàng"}
             </div>
             <div className="sidebar-items">
                 {sidebar &&

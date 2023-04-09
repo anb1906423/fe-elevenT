@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 import axios from 'axios';
-import CreateFeedbackModal from '@/components/order/CreateFeedbackModal';
-import UpdateFeedbackModal from '@/components/order/UpdateFeedbackModal';
+import CreateFeedbackModal from '@/components/OrderHistoryPage/CreateFeedbackModal';
+import UpdateFeedbackModal from '@/components/OrderHistoryPage/UpdateFeedbackModal';
 
 import AccountSidebar from '@/components/AccountSidebar'
-import Order from '@/components/order/Order'
+import Order from '@/components/OrderHistoryPage/Order'
 import { backendAPI } from '@/config'
 
 export const fakeOrderList = [
