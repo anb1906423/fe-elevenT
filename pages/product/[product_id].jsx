@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Rate } from 'antd';
 import { swtoast } from '@/mixins/swal.mixin'
+import { formatPrice } from '../../helpers/format.js'
 
 import CarouselFade from '@/components/Carousel'
 import PolicyItem from '@/components/PolicyItem'
@@ -145,25 +146,25 @@ const ProductDetail = () => {
 	return (
 		<div className='product-detail-page'>
 			<div className="row main-infor-product">
-				<div className="col-6">
+				<div className="col-8">
 					<CarouselFade product_image={product_image} />
 				</div>
-				<div className="col-6">
+				<div className="col-4">
 					<h6 className="product-name">{productName}</h6>
-					<div className="rating d-flex align-items-end">
-						<span>
+					<div className="rating d-flex align-items-center">
+						<span className='d-flex align-items-center'>
 							<Rate disabled allowHalf defaultValue={rating} />
 							<h6 className='d-inline-block'>({feedbackQuantity})</h6>
 						</span>
-						<span>Đã bán (web): {sold}</span>
+						<span style={{ margin: "2px 0 0" }}>Đã bán (web): {sold}</span>
 					</div>
 					<div className="price-box">
-						<strong>{price}đ</strong>
+						<span>{formatPrice(price)}đ</span>
 					</div>
 					<div className="colour-option-box">
 						<span>Màu:
 							<strong>
-								{colorList[selectedColorIndex] ? colorList[selectedColorIndex].colour_name : ''}
+								&nbsp;{colorList[selectedColorIndex] ? colorList[selectedColorIndex].colour_name : ''}
 							</strong>
 						</span>
 						<div>
@@ -184,7 +185,7 @@ const ProductDetail = () => {
 						</div>
 					</div>
 					<div className="size-option-box">
-						<span>Kích cỡ:
+						<span>Kích cỡ:&nbsp;
 							<strong>
 								{sizeList[selectedSizeIndex] ? sizeList[selectedSizeIndex].size_name : ''}
 							</strong>
@@ -205,7 +206,7 @@ const ProductDetail = () => {
 					</div>
 					<div className="action-box row">
 						<ProductQuantityInput quantity={quantity} setQuantity={setQuantity} />
-						<div className="add-product-to-cart-button col-7 d-flex justify-content-around align-items-center" onClick={handleAddToCart}>
+						<div className="add-product-to-cart-button border-radius col-7 d-flex justify-content-around align-items-center" onClick={handleAddToCart}>
 							Thêm vào giỏ hàng
 						</div>
 					</div>

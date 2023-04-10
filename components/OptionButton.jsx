@@ -8,7 +8,7 @@ const OptionButton = (props) => {
             ref={buttonRef}
             tabIndex="0"
             onClick={props.getContent}
-            className={`option-button d-inline-block text-center ${props.isSelected ? 'focus' : ''}`}
+            className={`option-button d-inline-block text-center border-radius ${props.isSelected ? 'focus' : ''}`}
         >
             <span>{props.content}</span>
         </div>
