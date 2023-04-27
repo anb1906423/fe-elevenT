@@ -1,6 +1,7 @@
 import React from 'react'
 import { StarFilled } from '@ant-design/icons'
 import { frontendAPI } from '@/config'
+import { formatRate } from '@/helpers/format'
 import Link from "next/link";
 
 const ProductItem = (props) => {
@@ -13,7 +14,7 @@ const ProductItem = (props) => {
                         <span className='d-flex justify-content-start align-items-center'>
                             <span className='rating d-flex justify-content-start align-items-center'>
                                 {
-                                    props.rating
+                                    formatRate(props.rating)
                                 }
                             </span>
                             <StarFilled className='d-flex justify-content-start align-items-center' />

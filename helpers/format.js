@@ -1,5 +1,12 @@
 export const formatPrice = (price) => price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
 
+export const formatRate = (rate) => {
+    if (Number.isInteger(rate))
+        return rate
+    else
+        return rate.toFixed(1)
+}
+
 export const formatDate = (created_at) => {
     const date = new Date(created_at);
     const year = date.getFullYear();

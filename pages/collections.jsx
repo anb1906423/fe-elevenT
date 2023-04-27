@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import { backendAPI } from '@/config'
 
-const Product = () => {
+const CollectionPage = () => {
     const [productList, setProductList] = useState([])
     useEffect(() => {
         const getProductList = async () => {
@@ -39,4 +39,4 @@ const Product = () => {
     )
 }
 
-export default Product
+export default CollectionPage

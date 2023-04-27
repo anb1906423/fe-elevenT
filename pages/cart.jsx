@@ -5,13 +5,13 @@ import { swtoast } from '@/mixins/swal.mixin'
 import { Radio } from 'antd';
 import { FaShippingFast } from 'react-icons/fa'
 
-import CartItem from '@/components/CartItem'
+import CartItem from '@/components/CartPage/CartItem'
 import Input from '@/components/Input'
 import { backendAPI } from '@/config'
 import { formatPrice } from '@/helpers/format'
 import { clearCart } from '@/store/actions/cartActions'
 
-const Cart = () => {
+const CartPage = () => {
     const [customerId, setCustomerId] = useState('')
     const [customerName, setCustomerName] = useState('')
     const [email, setEmail] = useState('')
@@ -65,15 +65,13 @@ const Cart = () => {
     }
 
     return (
-        <div className="cart">
+        <div className="cart-page">
             <div className="row">
                 <div className="col-7 cart-left-section">
-                    <div className="title-div">
-                        <h3 className="title">
-                            Thông tin vận chuyển
-                        </h3>
+                    <div className="title">
+                        Thông tin vận chuyển
                     </div>
-                    <div className="sidebar-div">
+                    <div>
                         <div className="row">
                             <div className="col-6">
                                 <Input
@@ -111,10 +109,8 @@ const Cart = () => {
                         />
                     </div>
                     <div className="payment">
-                        <div className="title-div">
-                            <h3 className="title">
-                                Hình thức thanh toán
-                            </h3>
+                        <div className="title">
+                            Hình thức thanh toán
                         </div>
                         <div>
                             <label htmlFor="" className="payment-item w-100 border-radius d-flex align-items-center justify-content-start">
@@ -131,13 +127,11 @@ const Cart = () => {
                             </label>
                         </div>
                     </div>
-                    <button onClick={handleOrder}>Đặt Hàng</button>
+                    <button className="order-btn border-radius" onClick={handleOrder}>Đặt Hàng</button>
                 </div>
                 <div className="col-5 cart-right-section">
-                    <div className="title-div">
-                        <h3 className="title">
-                            Giỏ hàng
-                        </h3>
+                    <div className="title">
+                        Giỏ hàng
                     </div>
                     <div className="cart-section">
                         {
@@ -174,7 +168,7 @@ const Cart = () => {
                         </div>
                         <div className="pricing-info-item final-total-box position-relative d-flex justify-content-between">
                             <p className='fw-bold'>Tổng</p>
-                            <p className='fw-bold'>
+                            <p className='fw-bold' style={{ fontSize: "20px" }}>
                                 {formatPrice(finalTotal(totalPrice))}đ
                             </p>
                         </div>
@@ -185,4 +179,4 @@ const Cart = () => {
     )
 }
 
-export default Cart
+export default CartPage

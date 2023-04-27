@@ -14,7 +14,7 @@ const CartItem = (props) => {
     return (
         <div className="cart-item">
             <div className="row">
-                <div className="col-4">
+                <div className="cart-col-left col-3">
                     <div className="box-img position-relative border-radius">
                         <img className="border-radius" src={image} alt="" />
                         <div className="position-absolute product-quantity">
@@ -22,7 +22,7 @@ const CartItem = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className="col-8 d-flex flex-column justify-content-between">
+                <div className="cart-col-right col-9 d-flex flex-column justify-content-between">
                     <div className="cart-item-info position-relative">
                         <div className="product-name">
                             <p className="fw-bold">
@@ -36,9 +36,7 @@ const CartItem = (props) => {
                         <div className="orther-info">
                             <p>{`${colour} / ${size}`}</p>
                         </div>
-                    </div>
-                    <div className="cart-item-action">
-                        <div className="d-flex align-self-end justify-content-between">
+                        <div className="cart-item-action">
                             <div
                                 className="fw-bold quantity-button col-3 d-flex justify-content-between align-items-center"
                                 style={{ border: '1px solid #000 ', borderRadius: '8px' }}
@@ -47,10 +45,10 @@ const CartItem = (props) => {
                                 <span>{quantity}</span>
                                 <MinusOutlined onClick={() => { dispatch(decrementQuantity(productVariantId)) }} />
                             </div>
-                            <div className="price-boxx">
-                                {totalValue}đ
-                            </div>
                         </div>
+                    </div>
+                    <div className="cart-item-price">
+                        {totalValue}đ
                     </div>
                 </div>
             </div>

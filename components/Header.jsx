@@ -42,7 +42,7 @@ const Header = () => {
 	useEffect(() => {
 		const handleGetCategory = async () => {
 			try {
-				let respond = await axios.get(backendAPI + '/api/category/list-all');
+				let respond = await axios.get(backendAPI + '/api/category/nest-list');
 				setCategoryList(respond.data)
 			} catch (error) {
 				console.log(error);
@@ -91,7 +91,7 @@ const Header = () => {
 				<ul className="menu p-2">
 					<li className="menu-item fw-bold text-uppercase position-relative">
 						<Link
-							href="/product"
+							href="/collections"
 							className="d-flex align-items-center"
 						>
 							Tất cả
@@ -115,7 +115,7 @@ const Header = () => {
 											categoryLevel1.children && categoryLevel1.children.map((category, index) => {
 												return (
 													<li key={index} className='w-100'>
-														<Link href="/product">{category.title}</Link>
+														<Link href={{ pathname: "/collections", query: { category: category.category_id } }}>{category.title}</Link>
 													</li>
 												)
 											})
