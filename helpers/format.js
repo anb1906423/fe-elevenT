@@ -4,7 +4,7 @@ export const formatRate = (rate) => {
     if (Number.isInteger(rate))
         return rate
     else
-        return rate.toFixed(1)
+        return parseFloat(rate).toFixed(1)
 }
 
 export const formatDate = (created_at) => {

@@ -1,14 +1,10 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { Inter } from '@next/font/google'
-import axios from 'axios'
 import Slider from '@/components/Slider'
-import {
-	ArrowUpOutlined
-} from '@ant-design/icons'
+import { ArrowUpOutlined } from '@ant-design/icons'
 
 const inter = Inter({ subsets: ['latin'] })
-export default function Home() {
+export default function HomePage() {
 	return (
 		<>
 			<Head>

@@ -4,16 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Rate } from 'antd';
 import { swtoast } from '@/mixins/swal.mixin'
-import { formatPrice } from '../../helpers/format.js'
+import { formatPrice, formatRate } from '../../helpers/format.js'
 
-import CarouselFade from '@/components/Carousel'
-import PolicyItem from '@/components/PolicyItem'
-import OptionButton from '@/components/OptionButton'
-import ProductQuantityInput from '@/components/ProductQuantityInput'
-import { backendAPI } from '@/config'
+import CarouselFade from '@/components/ProductDetailPage/Carousel.jsx'
+import OptionButton from '@/components/ProductDetailPage/OptionButton.jsx'
+import ProductQuantityInput from '@/components/ProductDetailPage/ProductQuantityInput.jsx'
+import PolicyItem from '@/components/ProductDetailPage/PolicyItem.jsx'
+import FeedbackBox from '@/components/ProductDetailPage/FeedbackBox.jsx'
 import { policyList } from '@/data/PolicyData'
 import { addToCart, clearError } from '@/store/actions/cartActions'
-import FeedbackBox from '@/components/feedback/FeedbackBox';
+import { backendAPI } from '@/config'
+
 const fakeColourList = [{ colour_id: 1, colour_name: 'Trắng' }, { colour_id: 2, colour_name: 'Đen' }];
 const fakeSizeList = [{ size_id: 1, size_name: 'S' }, { size_id: 2, size_name: 'M' }, { size_id: 3, size_name: 'L' }];
 const fake_product_image = [
@@ -22,7 +23,7 @@ const fake_product_image = [
 	'https://media.coolmate.me/cdn-cgi/image/quality=80,format=auto/uploads/September2022/DSC04797-copy-1.jpg',
 ];
 
-const ProductDetail = () => {
+const ProductDetailPage = () => {
 
 	const router = useRouter()
 	const { product_id, colour } = router.query
@@ -47,6 +48,8 @@ const ProductDetail = () => {
 	const [price, setPrice] = useState('0')
 	const [product_image, setProduct_Image] = useState([]);
 
+	const [feedbackList, setFeedbackList] = useState([])
+
 	useEffect(() => {
 		const handleGetProduct = async () => {
 			try {
@@ -64,6 +67,10 @@ const ProductDetail = () => {
 					if (respond.data[index].colour_id == colour)
 						setSelectedColorIndex(parseInt(index));
 				}
+
+				respond = await axios.get(backendAPI + `/api/feedback/list/${product_id}`);
+				console.log(respond.data)
+				setFeedbackList(respond.data)
 			} catch (error) {
 				console.log(error);
 				setColorList(fakeColourList);
@@ -153,7 +160,7 @@ const ProductDetail = () => {
 					<h6 className="product-name">{productName}</h6>
 					<div className="rating d-flex align-items-center">
 						<span className='d-flex align-items-center'>
-							<Rate disabled allowHalf defaultValue={rating} />
+							<Rate disabled allowHalf value={rating} />
 							<h6 className='d-inline-block'>({feedbackQuantity})</h6>
 						</span>
 						<span style={{ margin: "2px 0 0" }}>Đã bán (web): {sold}</span>
@@ -231,17 +238,12 @@ const ProductDetail = () => {
 			<div className="review-box position-relative d-flex align-items-center">
 				<div className="">
 					<h5 className='feedback_quantify-detail d-inline-block'>{feedbackQuantity} Đánh giá</h5>
-					<h5 className='rating-detail d-inline-block'>{rating} / 5 ⭐</h5>
+					<h5 className='rating-detail d-inline-block'>{formatRate(rating)} / 5 ⭐</h5>
 				</div>
 			</div>
-			<div className="feedback-wrapper">
-				<h6 style={{ marginBottom: "20px" }}>Đánh giá</h6>
-				<div>
-					<FeedbackBox />
-				</div>
-			</div>
+			<FeedbackBox feedbackList={feedbackList} />
 		</div >
 	)
 }
 
-export default ProductDetail
+export default ProductDetailPage

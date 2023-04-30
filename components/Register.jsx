@@ -20,7 +20,7 @@ const Register = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordAgain, setPasswordAgain] = useState('')
-    
+
     const dispatch = useDispatch()
 
     const [fullNameError, setFullNameError] = useState('')
@@ -104,7 +104,7 @@ const Register = (props) => {
         }
     }
     return (
-        <div className='user register w-100 position-absolute' onClick={props.toClose}>
+        <div className='user register w-100 position-absolute d-flex' onClick={props.toClose}>
             <div className="user-box position-relative register-box border-radius" onClick={(e) => e.stopPropagation()}>
                 <div className="header-form position-absolute" onClick={props.toClose}>
                     <FaTimes />

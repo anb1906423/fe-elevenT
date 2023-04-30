@@ -102,13 +102,6 @@ const Footer = () => {
 										<p>elevent@contact.com</p>
 									</div>
 								</div>
-								<div className='d-flex align-items-center' style={{ marginBottom: "12px" }}>
-									<div className='col-12 d-flex align-items-center justify-content-between'>
-										<FaFacebookF />
-										<FaInstagram />
-										<FaYoutubeSquare />
-									</div>
-								</div>
 							</div>
 						</ul>
 					</div>

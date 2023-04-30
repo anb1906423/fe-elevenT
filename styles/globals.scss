@@ -3,19 +3,19 @@
 @import './User.scss';
 @import './ProductItem.scss';
 @import './AccountInfor.scss';
-@import './ProductDetail.scss';
-@import './Homepage.scss';
-@import './components/Carousel.scss';
-@import './components/OptionButton.scss';
-@import './components/PolicyItem.scss';
-@import './components/AccountSidebar.scss';
+@import './HomePage.scss';
+@import './AccountSidebar.scss';
 @import './CartPage/CartPage.scss';
 @import './CartPage//CartItem.scss';
 @import './OrderHistoryPage/OrderHistoryPage.scss';
 @import './OrderHistoryPage/FeedbackModal.scss';
 @import './OrderDetailPage.scss';
 
-@import './feedback//Feedback.scss';
+@import './ProductDetailPage//ProductDetailPage.scss';
+@import './ProductDetailPage/Carousel.scss';
+@import './ProductDetailPage/OptionButton.scss';
+@import './ProductDetailPage/PolicyItem.scss';
+@import './ProductDetailPage/FeedbackBox.scss';
 
 * {
     margin: 0;

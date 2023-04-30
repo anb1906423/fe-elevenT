@@ -50,7 +50,7 @@ const Login = (props) => {
 	}
 
 	return (
-		<div className='user login w-100 position-absolute' onClick={props.toClose}>
+		<div className='user login w-100 position-absolute d-flex' onClick={props.toClose}>
 			<div className="user-box position-relative login-box text-center border-radius" onClick={(e) => e.stopPropagation()}>
 				<div className="header-form position-absolute" onClick={props.toClose}>
 					<FaTimes />
