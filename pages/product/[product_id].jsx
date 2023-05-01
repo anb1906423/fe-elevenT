@@ -153,10 +153,10 @@ const ProductDetailPage = () => {
 	return (
 		<div className='product-detail-page'>
 			<div className="row main-infor-product">
-				<div className="col-8">
+				<div className="col-6">
 					<CarouselFade product_image={product_image} />
 				</div>
-				<div className="col-4">
+				<div className="col-6">
 					<h6 className="product-name">{productName}</h6>
 					<div className="rating d-flex align-items-center">
 						<span className='d-flex align-items-center'>
