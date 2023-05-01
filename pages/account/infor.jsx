@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 import Head from 'next/head'
+import axios from 'axios'
 import { useSelector } from 'react-redux'
 
 import AccountSidebar from '@/components/AccountSidebar'
 import Input from '@/components/Input'
+import { swtoast } from '@/mixins/swal.mixin'
+import { customerLoginOrRegister } from '@/store/actions/customerActions'
+import { backendAPI } from '@/config'
 
 const CustomerInfoPage = () => {
 
+    const dispatch = useDispatch()
+    const [customerId, setCustomerId] = useState('')
     const [customerName, setCustomerName] = useState('')
     const [email, setEmail] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -14,11 +21,39 @@ const CustomerInfoPage = () => {
     const customerInfo = useSelector((state) => state.customer.customerInfo)
 
     useEffect(() => {
+        customerInfo != null ? setCustomerId(customerInfo.customer_id) : setCustomerId('')
         customerInfo != null ? setEmail(customerInfo.email) : setEmail('')
         customerInfo != null ? setCustomerName(customerInfo.customer_name) : setCustomerName('')
         customerInfo != null ? setPhoneNumber(customerInfo.phone_number) : setPhoneNumber('')
         customerInfo != null ? setAddress(customerInfo.address) : setAddress('')
     }, [customerInfo])
+
+    const handleUpdate = async () => {
+        try {
+            let customer = {
+                user_id: customerId,
+                customer_name: customerName,
+                phone_number: phoneNumber,
+                address,
+            }
+            const response = await axios.put(`${backendAPI}/api/customer/update`, customer)
+
+            let customerInfo = {
+                customer_id: customerId,
+                email,
+                customer_name: response.data.customer_name,
+                phone_number: response.data.phone_number,
+                address: response.data.address
+            }
+            dispatch(customerLoginOrRegister(customerInfo));
+            swtoast.success({ text: "Cập nhật tài khoản thành công" });
+        } catch (err) {
+            console.log(err);
+            swtoast.error({
+                text: "Có lỗi khi cập nhật tài khoản vui lòng thử lại!"
+            });
+        }
+    }
 
     return (
         <div className="account-infor row">
@@ -51,6 +86,7 @@ const CustomerInfoPage = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
+                                disabled={true}
                                 placeholder='Địa chỉ email'
                             />
                         </div>
@@ -78,7 +114,9 @@ const CustomerInfoPage = () => {
                         </div>
                     </div>
                     <div className="infor-tab-item col-12 row d-flex align-items-center">
-                        <div className="col-3"><button className='update-account-btn border-radius'>Cập nhật tài khoản</button></div>
+                        <div className="col-3">
+                            <button className='update-account-btn border-radius' onClick={handleUpdate}>Cập nhật tài khoản</button>
+                        </div>
                     </div>
                 </div>
             </div>

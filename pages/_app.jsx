@@ -27,6 +27,7 @@ export default function MyApp({ Component, pageProps }) {
 					crossOrigin="anonymous"
 				/>
 				<Head>
+					<title>ElevenT</title>
 					<link rel="icon" href="../img/favicon.jpg" />
 				</Head>
 				<Component {...pageProps} />

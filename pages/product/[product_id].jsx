@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { Rate } from 'antd';
+import { StarFilled } from '@ant-design/icons'
 import { swtoast } from '@/mixins/swal.mixin'
 import { formatPrice, formatRate } from '../../helpers/format.js'
 
@@ -69,7 +70,6 @@ const ProductDetailPage = () => {
 				}
 
 				respond = await axios.get(backendAPI + `/api/feedback/list/${product_id}`);
-				console.log(respond.data)
 				setFeedbackList(respond.data)
 			} catch (error) {
 				console.log(error);
@@ -122,7 +122,7 @@ const ProductDetailPage = () => {
 		if (selectedColorIndex !== null && selectedSizeIndex !== null) {
 			handleGetProductVariant();
 		}
-	}, [selectedSizeIndex]);
+	}, [selectedColorIndex, selectedSizeIndex]);
 
 	useEffect(() => {
 		if (isErrorInCart) {
@@ -153,10 +153,10 @@ const ProductDetailPage = () => {
 	return (
 		<div className='product-detail-page'>
 			<div className="row main-infor-product">
-				<div className="col-6">
+				<div className="col-4">
 					<CarouselFade product_image={product_image} />
 				</div>
-				<div className="col-6">
+				<div className="col-8">
 					<h6 className="product-name">{productName}</h6>
 					<div className="rating d-flex align-items-center">
 						<span className='d-flex align-items-center'>
@@ -231,18 +231,16 @@ const ProductDetailPage = () => {
 
 			<div className="row product-detail">
 				<div className="col-12">
-					<h5 className='text-center'>Chi tiết sản phẩm</h5>
+					<h5 className='title text-center'>Chi tiết sản phẩm</h5>
 					<div
 						dangerouslySetInnerHTML={{ __html: productDescription }}
-					>
-						{/* {productDescription} */}
-					</div>
+					/>
 				</div>
 			</div>
 			<div className="review-box position-relative d-flex align-items-center">
 				<div className="">
 					<h5 className='feedback_quantify-detail d-inline-block'>{feedbackQuantity} Đánh giá</h5>
-					<h5 className='rating-detail d-inline-block'>{formatRate(rating)} / 5 ⭐</h5>
+					<h5 className='rating-detail d-inline-block'>{formatRate(rating)} / 5 <span className='star-icon'><StarFilled /></span></h5>
 				</div>
 			</div>
 			<FeedbackBox feedbackList={feedbackList} />
