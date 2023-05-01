@@ -6,6 +6,7 @@ import store from '@/store/store';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/globals.scss';
 import dynamic from 'next/dynamic'
+import Head from 'next/head';
 
 
 const Layout = dynamic(() => import('@/components/Layout'), {
@@ -25,6 +26,9 @@ export default function MyApp({ Component, pageProps }) {
 					integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
 					crossOrigin="anonymous"
 				/>
+				<Head>
+					<link rel="icon" href="../img/favicon.jpg" />
+				</Head>
 				<Component {...pageProps} />
 			</Layout>
 		</Provider>

@@ -161,7 +161,7 @@ const Header = () => {
 								</li>
 							</>
 					}
-					<li className="inner-item menu-item fw-bold text-uppercase">
+					<li className="cart inner-item menu-item fw-bold text-uppercase">
 						<Link href="/cart"><FaShoppingBag /></Link>
 					</li>
 				</ul>

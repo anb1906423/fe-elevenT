@@ -232,7 +232,11 @@ const ProductDetailPage = () => {
 			<div className="row product-detail">
 				<div className="col-12">
 					<h5 className='text-center'>Chi tiết sản phẩm</h5>
-					<div>{productDescription}</div>
+					<div
+						dangerouslySetInnerHTML={{ __html: productDescription }}
+					>
+						{/* {productDescription} */}
+					</div>
 				</div>
 			</div>
 			<div className="review-box position-relative d-flex align-items-center">
