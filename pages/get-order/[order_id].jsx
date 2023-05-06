@@ -5,6 +5,7 @@ import axios from 'axios'
 
 import AccountSidebar from '@/components/AccountSidebar'
 import OrderDetailTable from '@/components/OrderDetailPage/OrderDetailTable'
+import { swtoast } from '@/mixins/swal.mixin'
 import { formatTime } from '@/helpers/format';
 import { backendAPI } from '@/config'
 
@@ -110,6 +111,27 @@ const OrderDetailPage = () => {
         }
     }, [order_id, customerId])
 
+    const renderCancelBtn = () => {
+        if (stateId == 1 || stateId == 2 || stateId == 3) {
+            return (
+                <button className='cancel-order-btn' onClick={handleCancelOrder}>Hủy đơn hàng</button>
+            )
+        }
+    }
+
+    const handleCancelOrder = async () => {
+        try {
+            await axios.put(`${backendAPI}/api/order/change-status/${orderId}/5`)
+            swtoast.success({ text: "Hủy đơn hàng thành công" });
+            router.push('/account/orders')
+        } catch (err) {
+            console.log(err);
+            swtoast.error({
+                text: "Có lỗi khi hủy đơn hàng vui lòng thử lại!"
+            });
+        }
+    }
+
     return (
         <div className='order-detail-page'>
             <div className="row">
@@ -120,7 +142,9 @@ const OrderDetailPage = () => {
                     <div className="order-detail">
                         <h1 className="title">Thông tin đơn hàng của bạn</h1>
                         <div className="d-flex row align-items-center justify-content-between">
-                            <div className="col-3"></div>
+                            <div className="col-3">
+                                {renderCancelBtn()}
+                            </div>
                             <div className="col-6 order-title border-radius d-flex align-items-center justify-content-center fw-bold">
                                 <div>
                                     ĐƠN HÀNG #{orderId}

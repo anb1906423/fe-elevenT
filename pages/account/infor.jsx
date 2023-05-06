@@ -29,30 +29,48 @@ const CustomerInfoPage = () => {
     }, [customerInfo])
 
     const handleUpdate = async () => {
-        try {
-            let customer = {
-                user_id: customerId,
-                customer_name: customerName,
-                phone_number: phoneNumber,
-                address,
-            }
-            const response = await axios.put(`${backendAPI}/api/customer/update`, customer)
+        if (validate()) {
+            try {
+                let customer = {
+                    user_id: customerId,
+                    customer_name: customerName,
+                    phone_number: phoneNumber,
+                    address,
+                }
+                const response = await axios.put(`${backendAPI}/api/customer/update`, customer)
 
-            let customerInfo = {
-                customer_id: customerId,
-                email,
-                customer_name: response.data.customer_name,
-                phone_number: response.data.phone_number,
-                address: response.data.address
+                let customerInfo = {
+                    customer_id: customerId,
+                    email,
+                    customer_name: response.data.customer_name,
+                    phone_number: response.data.phone_number,
+                    address: response.data.address
+                }
+                dispatch(customerLoginOrRegister(customerInfo));
+                swtoast.success({ text: "Cập nhật tài khoản thành công" });
+            } catch (err) {
+                console.log(err);
+                swtoast.error({
+                    text: "Có lỗi khi cập nhật tài khoản vui lòng thử lại!"
+                });
             }
-            dispatch(customerLoginOrRegister(customerInfo));
-            swtoast.success({ text: "Cập nhật tài khoản thành công" });
-        } catch (err) {
-            console.log(err);
-            swtoast.error({
-                text: "Có lỗi khi cập nhật tài khoản vui lòng thử lại!"
-            });
         }
+    }
+
+    const validate = () => {
+        if (!customerName) {
+            swtoast.error({ text: "Tên người dùng không được để trống" })
+            return false
+        }
+        if (!phoneNumber) {
+            swtoast.error({ text: "Số điện thoại không được để trống" })
+            return false
+        }
+        if (!address) {
+            swtoast.error({ text: "Địa chỉ không được để trống" })
+            return false
+        }
+        return true
     }
 
     return (

@@ -9,6 +9,10 @@
 
         .rating-box {
             margin-left: 22px;
+
+            .ant-rate-star-full {
+                color: var(--order-table-color);
+            }
         }
 
         .content-box {

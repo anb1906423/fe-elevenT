@@ -10,6 +10,16 @@
             text-transform: uppercase;
         }
 
+        .cancel-order-btn {
+            height: 40px;
+            padding: 0 20px;
+            border: none;
+            border-radius: 16px;
+            background: #000;
+            font-weight: 600;
+            color: #fff;
+        }
+
         .order-title {
             border: 1px solid #000;
             padding: 12px 16px;
